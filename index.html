@@ -48,6 +48,24 @@
   .nav-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
   .nav-links a:hover { color: var(--gold); }
 
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; transition: color 0.3s; background: none; border: none; font-family: 'Raleway', sans-serif; padding: 0; }
+  .nav-dropdown:hover .nav-dropdown-toggle { color: var(--gold); }
+
+  .nav-dropdown-menu {
+    position: absolute; top: 100%; right: 0;
+    background: rgba(9,8,10,0.97);
+    border: 1px solid var(--border-red);
+    padding: 0.5rem 0;
+    min-width: 160px;
+    opacity: 0; pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: all; transform: translateY(4px); }
+  .nav-dropdown-menu a { display: block; padding: 0.6rem 1.25rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s, background 0.2s; }
+  .nav-dropdown-menu a:hover { color: var(--gold); background: rgba(201,168,76,0.04); }
+
   #hero {
     min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
     text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
@@ -181,7 +199,15 @@
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#artwork">Artwork</a></li>
     <li><a href="#recruitment">Join</a></li>
-    <li><a href="ranks.html">Structure</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-toggle">More</button>
+      <div class="nav-dropdown-menu">
+        <a href="ranks.html">Structure</a>
+        <a href="triad.html">The Triad</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="lore.html">Lore</a>
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -304,6 +330,9 @@
     <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event V</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
     <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event VI</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
   </div>
+  <div style="text-align: center; padding: 2rem;">
+    <a href="gallery.html" class="btn-ghost">View all</a>
+  </div>
 </div>
 
 <div id="artwork" style="border-top: 1px solid var(--border-red); max-width: 100%; padding: 0;">
@@ -319,6 +348,9 @@
     <div class="gallery-cell"><div class="gallery-placeholder">Artwork · IV</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
     <div class="gallery-cell"><div class="gallery-placeholder">Artwork · V</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
     <div class="gallery-cell"><div class="gallery-placeholder">Artwork · VI</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
+  </div>
+  <div style="text-align: center; padding: 2rem;">
+    <a href="gallery.html" class="btn-ghost">View all</a>
   </div>
 </div>
 

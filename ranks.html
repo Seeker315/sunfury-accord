@@ -10,270 +10,62 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --red: #9e1c1c;
-    --red-bright: #c42020;
-    --red-pale: #e8a0a0;
-    --red-dim: #5c1010;
-    --fel: #3a7a2a;
-    --fel-bright: #4fa83a;
-    --fel-pale: #a8e090;
-    --fel-dim: #1e4014;
-    --gold: #c9a84c;
-    --gold-dim: #7a6028;
-    --bg: #080608;
-    --bg-surface: #0e080e;
-    --bg-card: #120a12;
-    --text: #d4c4c4;
-    --text-muted: #7a6060;
-    --text-dim: #3e2e2e;
-    --border: rgba(158, 28, 28, 0.18);
-    --border-strong: rgba(158, 28, 28, 0.4);
-    --border-fel: rgba(58, 122, 42, 0.25);
+    --gold: #c9a84c; --gold-bright: #e8c96a; --gold-pale: #f0dfa0; --gold-dim: #7a6028;
+    --red: #7a1a1a; --red-bright: #a02020; --red-dim: #3e0e0e;
+    --fel: #4fa83a; --fel-pale: #a8e090; --fel-dim: #1e4014;
+    --bg: #09080a; --bg-surface: #0d0b0e; --bg-card: #110e12;
+    --text: #d8ceb8; --text-muted: #7a7060; --text-dim: #3e3830;
+    --border: rgba(201,168,76,0.12); --border-strong: rgba(201,168,76,0.3);
+    --border-red: rgba(122,26,26,0.35);
   }
 
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Raleway', sans-serif;
-    font-weight: 300;
-    line-height: 1.8;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Raleway', sans-serif; font-weight: 300; line-height: 1.8; overflow-x: hidden; }
 
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1.5rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, rgba(8,6,8,0.97) 0%, transparent 100%);
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(9,8,10,0.97) 0%, transparent 100%); }
+  .nav-logo { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold); text-decoration: none; }
+  .nav-back { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .nav-back:hover { color: var(--gold); }
 
-  .nav-logo {
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    letter-spacing: 0.3em;
-    color: var(--red-pale);
-    text-decoration: none;
-  }
+  .page-header { padding: 12rem 2rem 5rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border-red); }
+  .section-label { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+  .page-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--gold-pale); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .page-intro { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-muted); max-width: 680px; line-height: 1.9; }
+  .page-intro p { margin-bottom: 1rem; }
 
-  .nav-back {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  .nav-back:hover { color: var(--red-pale); }
-
-  .page-header {
-    padding: 12rem 2rem 5rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .section-label {
-    font-size: 0.6rem;
-    font-weight: 400;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--red-dim);
-    margin-bottom: 0.75rem;
-  }
-
-  .page-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400;
-    color: var(--red-pale);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
-  }
-
-  .page-intro {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    max-width: 600px;
-    line-height: 1.9;
-  }
-
-  .content {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 5rem 2rem;
-  }
-
+  .content { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
   .block { margin-bottom: 5rem; }
+  .block-title { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 2rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-red); }
 
-  .block-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--red-dim);
-    margin-bottom: 2rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
-  }
+  .triad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-strong); }
+  .triad-card { background: var(--bg-card); padding: 2.5rem 2rem; position: relative; }
+  .triad-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold-dim); }
+  .triad-rank { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 400; color: var(--gold-pale); letter-spacing: 0.1em; margin-bottom: 0.15rem; }
+  .triad-tier { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.25rem; }
+  .triad-branch { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.5rem; }
+  .triad-desc { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
 
-  /* TRIAD */
-  .triad-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border-strong);
-  }
+  .rank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-red); }
+  .rank-branch { background: var(--bg-card); padding: 2rem 1.5rem; }
+  .branch-header { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.2em; color: var(--gold-pale); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-red); }
+  .rank-item { padding: 0.75rem 0; border-bottom: 1px solid rgba(201,168,76,0.06); }
+  .rank-name { font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 400; color: var(--text); letter-spacing: 0.1em; }
+  .rank-tier { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; margin-top: 0.1rem; }
+  .rank-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.35rem; }
 
-  .triad-card {
-    background: var(--bg-card);
-    padding: 2.5rem 2rem;
-    position: relative;
-  }
+  .adherent-bar { background: var(--bg-surface); border: 1px solid var(--border-red); border-top: none; padding: 1.5rem; }
+  .adherent-bar .rank-name { color: var(--text-muted); font-size: 0.85rem; }
+  .adherent-bar .rank-tier { color: var(--text-dim); margin-top: 0.1rem; }
+  .adherent-bar .rank-desc { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; }
 
-  .triad-card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--red-dim);
-  }
+  .steps { display: flex; flex-direction: column; }
+  .step { display: grid; grid-template-columns: 80px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border-red); align-items: start; }
+  .step-number { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 400; color: var(--gold-dim); letter-spacing: 0.05em; line-height: 1; padding-top: 0.25rem; }
+  .step-title { font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 0.15em; color: var(--gold-pale); margin-bottom: 0.5rem; }
+  .step-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
 
-  .triad-rank {
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--red-pale);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.25rem;
-  }
-
-  .triad-branch {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--red-dim);
-    margin-bottom: 1.5rem;
-  }
-
-  .triad-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.8;
-  }
-
-  /* RANK TABLE */
-  .rank-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-  }
-
-  .rank-branch {
-    background: var(--bg-card);
-    padding: 2rem 1.5rem;
-  }
-
-  .branch-header {
-    font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    color: var(--red-pale);
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .rank-item {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(158,28,28,0.06);
-  }
-
-  .rank-name {
-    font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--text);
-    letter-spacing: 0.1em;
-  }
-
-  .rank-tier {
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-top: 0.15rem;
-  }
-
-  .adherent-bar {
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-top: none;
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .adherent-bar .rank-name { color: var(--text-muted); font-size: 0.8rem; }
-  .adherent-bar .rank-tier { color: var(--text-dim); margin-top: 0; }
-
-  /* INITIATION */
-  .steps { display: flex; flex-direction: column; gap: 0; }
-
-  .step {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 2rem;
-    padding: 2rem 0;
-    border-bottom: 1px solid var(--border);
-    align-items: start;
-  }
-
-  .step-number {
-    font-family: 'Cinzel', serif;
-    font-size: 2rem;
-    font-weight: 400;
-    color: var(--red-dim);
-    letter-spacing: 0.05em;
-    line-height: 1;
-    padding-top: 0.25rem;
-  }
-
-  .step-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.15em;
-    color: var(--red-pale);
-    margin-bottom: 0.5rem;
-  }
-
-  .step-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.8;
-  }
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2.5rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 4rem;
-  }
-
-  .footer-logo { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--text-dim); }
+  footer { border-top: 1px solid var(--border-red); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; }
+  .footer-logo { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--gold-dim); }
   .footer-text { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim); }
 
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -297,27 +89,33 @@
 
 <div class="page-header">
   <p class="section-label">Guild Structure</p>
-  <h1 class="page-title">The Governing Triad<br>& Operational Framework</h1>
-  <p class="page-intro">The Accord is not a hierarchy built on worth. It is a structure built on function. Each branch serves a purpose. No branch outranks another.</p>
+  <h1 class="page-title">The Triad</h1>
+  <div class="page-intro">
+    <p>The Accord is not a hierarchy built on titles. It is a structure built on function and willpower. Each branch serves a purpose. No branch outranks the others.</p>
+    <p>There is no single leader, no single point of failure. A constellation of three capable individuals, equal to each other, each carrying responsibility over their respective domain. They are known as the Triad.</p>
+  </div>
 </div>
 
 <div class="content">
 
   <div class="block reveal">
-    <div class="block-title">The Triad — Governing Council</div>
+    <div class="block-title">The Triad</div>
     <div class="triad-grid">
       <div class="triad-card">
         <div class="triad-rank">Archon</div>
+        <div class="triad-tier">Tier III — Leadership</div>
         <div class="triad-branch">Seeker Branch</div>
         <div class="triad-desc">Directs the Seekers. Embodies wisdom and the mastery of power. The investigative arm of the Accord.</div>
       </div>
       <div class="triad-card">
         <div class="triad-rank">Paragon</div>
+        <div class="triad-tier">Tier III — Leadership</div>
         <div class="triad-branch">Vanguard Branch</div>
         <div class="triad-desc">Directs the Vanguard. Embodies willpower, resolve, and the commitment to see things through.</div>
       </div>
       <div class="triad-card">
         <div class="triad-rank">Consul</div>
+        <div class="triad-tier">Tier III — Leadership</div>
         <div class="triad-branch">Cipher Branch</div>
         <div class="triad-desc">Directs the Ciphers. Embodies diplomacy, connection, and the unseen architecture of the Accord.</div>
       </div>
@@ -328,17 +126,19 @@
   </div>
 
   <div class="block reveal">
-    <div class="block-title">Rank Structure — All Branches</div>
+    <div class="block-title">Rank Structure</div>
     <div class="rank-grid">
       <div class="rank-branch">
         <div class="branch-header">Seeker Branch</div>
         <div class="rank-item">
           <div class="rank-name">Seeker</div>
           <div class="rank-tier">Tier II — Proven</div>
+          <div class="rank-desc">Those who pursue knowledge and understanding of power in all its forms. The investigative arm of the Accord.</div>
         </div>
         <div class="rank-item">
           <div class="rank-name">Scholar</div>
           <div class="rank-tier">Tier I — Member</div>
+          <div class="rank-desc">Newly admitted members of the Seeker branch. They have proven their intent. Their depth is yet to be demonstrated.</div>
         </div>
       </div>
       <div class="rank-branch">
@@ -346,10 +146,12 @@
         <div class="rank-item">
           <div class="rank-name">Vanguard</div>
           <div class="rank-tier">Tier II — Proven</div>
+          <div class="rank-desc">Those who have shown resolve in the field. They act where others deliberate.</div>
         </div>
         <div class="rank-item">
           <div class="rank-name">Sentinel</div>
           <div class="rank-tier">Tier I — Member</div>
+          <div class="rank-desc">Newly admitted members of the Vanguard branch. They have proven their commitment. Their mettle is yet to be tested at full measure.</div>
         </div>
       </div>
       <div class="rank-branch">
@@ -357,16 +159,21 @@
         <div class="rank-item">
           <div class="rank-name">Cipher</div>
           <div class="rank-tier">Tier II — Proven</div>
+          <div class="rank-desc">Those who operate in the unseen spaces. Contacts, intelligence, the architecture others never notice.</div>
         </div>
         <div class="rank-item">
           <div class="rank-name">Emissary</div>
           <div class="rank-tier">Tier I — Member</div>
+          <div class="rank-desc">Newly admitted members of the Cipher branch. They have proven their awareness. Their network is yet to be built.</div>
         </div>
       </div>
     </div>
     <div class="adherent-bar">
-      <div class="rank-name">Adherent</div>
-      <div class="rank-tier">Probationary Entry — Universal starting point</div>
+      <div>
+        <div class="rank-name">Adherent</div>
+        <div class="rank-tier">Probationary — Universal entry point</div>
+        <div class="rank-desc">The entry point. No branch, no title. A period of observation, on both sides.</div>
+      </div>
     </div>
   </div>
 
@@ -397,8 +204,8 @@
       <div class="step">
         <div class="step-number">IV</div>
         <div>
-          <div class="step-title">Advancement to Tier II</div>
-          <div class="step-text">Advancement does not happen through attendance or time served. Those who wish to advance approach the Triad themselves. A second presentation is required: a demonstration of depth and development. The Triad decides. No guaranteed timeline.</div>
+          <div class="step-title">Ascension</div>
+          <div class="step-text">Through participation, cunning and displays of willpower, those who wish to advance may approach the Triad themselves. A second trial will follow, a demonstration of depth and development.</div>
         </div>
       </div>
     </div>
