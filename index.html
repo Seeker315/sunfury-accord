@@ -77,6 +77,7 @@
     min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
     text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
   }
+  #hero > *:not(.hero-bg) { position: relative; z-index: 1; }
 
   .hero-bg {
     position: absolute; inset: 0;
@@ -349,7 +350,7 @@
 <div id="hero">
   <div class="hero-bg"></div>
   <div class="hero-line"></div>
-  <p class="hero-eyebrow">Argent Dawn EU &nbsp;·&nbsp; Sin'dorei &nbsp;·&nbsp; Patch 12.0 Midnight</p>
+  <p class="hero-eyebrow">Argent Dawn EU &nbsp;·&nbsp; Patch 12.0 Midnight</p>
   <h1>The Sunfury<br>Accord</h1>
   <p class="hero-subtitle">Power is a tool. The wielder determines its worth.</p>
   <div class="hero-divider">
