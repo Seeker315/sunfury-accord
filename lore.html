@@ -3,50 +3,330 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lore — The Sunfury Accord</title>
+<title>The Archives · The Sunfury Accord</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --gold: #c9a84c; --gold-pale: #f0dfa0; --gold-dim: #7a6028;
-    --red: #7a1a1a; --red-dim: #3e0e0e;
-    --bg: #09080a; --bg-card: #110e12;
-    --text: #d8ceb8; --text-muted: #7a7060; --text-dim: #3e3830;
-    --border: rgba(201,168,76,0.12); --border-red: rgba(122,26,26,0.35);
+    --fel: #4fa83a; --fel-bright: #6dcc55; --fel-pale: #a8e090;
+    --fel-border: rgba(79,168,58,0.35);
+    --red: #7a1a1a; --border-red: rgba(122,26,26,0.35);
+    --bg: #09080a; --text: #e8dfc8; --text-muted: #9a9080; --text-dim: #5a5248;
   }
-  body { background: var(--bg); color: var(--text); font-family: 'Raleway', sans-serif; font-weight: 300; line-height: 1.8; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Raleway', sans-serif; font-weight: 300; line-height: 1.8; overflow-x: hidden; }
+
+  /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(9,8,10,0.97) 0%, transparent 100%); }
-  .nav-logo { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold); text-decoration: none; }
-  .nav-back { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
-  .nav-back:hover { color: var(--gold); }
-  .page-header { padding: 12rem 2rem 5rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border-red); }
-  .section-label { font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
-  .page-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--gold-pale); letter-spacing: 0.1em; margin-bottom: 1rem; }
-  .page-intro { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-muted); max-width: 600px; line-height: 1.9; }
-  .content { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
-  .placeholder-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-dim); border: 1px solid var(--border-red); padding: 2rem; text-align: center; }
-  footer { border-top: 1px solid var(--border-red); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; }
+  .nav-logo { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; transition: color 0.3s; background: none; border: none; font-family: 'Raleway', sans-serif; padding: 0; }
+  .nav-dropdown:hover .nav-dropdown-toggle { color: var(--gold); }
+  .nav-dropdown-menu { position: absolute; top: 100%; right: 0; background: rgba(9,8,10,0.97); border: 1px solid var(--border-red); padding: 0.5rem 0; min-width: 160px; opacity: 0; pointer-events: none; transition: opacity 0.2s; margin-top: 0.75rem; }
+  .nav-dropdown-menu::before { content: ''; position: absolute; top: -0.75rem; left: 0; right: 0; height: 0.75rem; }
+  .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: all; }
+  .nav-dropdown-menu a { display: block; padding: 0.6rem 1.25rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s, background 0.2s; }
+  .nav-dropdown-menu a:hover { color: var(--gold); background: rgba(201,168,76,0.04); }
+
+  /* PAGE HEADER — clean dark, above image */
+  .page-header {
+    padding: 10rem 2rem 4rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-red);
+    position: relative;
+  }
+  .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 50% 40%, rgba(122,26,26,0.08) 0%, transparent 70%); pointer-events: none; }
+
+  /* HERO — full width library image, below header */
+  .archives-hero {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    min-height: 500px;
+    overflow: hidden;
+  }
+
+  .archives-hero-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: brightness(0.65);
+  }
+
+  /* Gradient overlays — darken bottom for transition */
+  .archives-hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to bottom, transparent 60%, rgba(9,8,10,0.95) 100%);
+    pointer-events: none;
+  }
+
+  /* DIAMOND MARKERS over the image */
+  .archive-marker {
+    position: absolute; z-index: 3;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+
+  .archive-marker-dot {
+    width: 18px; height: 18px;
+    transform: rotate(45deg);
+    border: 1.5px solid var(--gold);
+    background: rgba(201,168,76,0.2);
+    position: relative;
+    animation: archiveglow 2s ease-in-out infinite;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  @keyframes archiveglow {
+    0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.4), 0 0 2px rgba(201,168,76,0.4) inset; }
+    50%       { box-shadow: 0 0 20px rgba(201,168,76,0.9), 0 0 8px rgba(201,168,76,0.6) inset; }
+  }
+  .archive-marker:hover .archive-marker-dot {
+    background: rgba(79,168,58,0.5);
+    border-color: var(--fel);
+    animation: archiveglowfel 1.2s ease-in-out infinite;
+  }
+  @keyframes archiveglowfel {
+    0%, 100% { box-shadow: 0 0 8px rgba(79,168,58,0.6); }
+    50%       { box-shadow: 0 0 26px rgba(79,168,58,1); }
+  }
+
+  /* Expanding ring */
+  .archive-marker-dot::after {
+    content: ''; position: absolute; inset: -6px;
+    border: 1.5px solid rgba(201,168,76,0.5);
+    animation: archivepulse 2s ease-out infinite;
+  }
+  @keyframes archivepulse {
+    0%   { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0;   transform: scale(3); }
+  }
+  .archive-marker:hover .archive-marker-dot::after { border-color: rgba(79,168,58,0.6); }
+
+  /* TOOLTIP */
+  .archive-tooltip {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 50%; transform: translateX(-50%);
+    background: rgba(9,8,10,0.97);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 1.2rem 1.5rem;
+    min-width: 230px; max-width: 300px;
+    pointer-events: none;
+    opacity: 0; transition: opacity 0.15s;
+    text-align: left; z-index: 500;
+  }
+  .archive-tooltip.pinned { opacity: 1; pointer-events: all; }
+  .archive-marker:hover .archive-tooltip { opacity: 1; pointer-events: all; }
+  .archive-tooltip::after {
+    content: ''; position: absolute;
+    top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(201,168,76,0.3);
+  }
+
+  /* Tooltip goes fel on button hover */
+  .archive-tooltip:has(.archive-tooltip-btn:hover) { border-color: rgba(79,168,58,0.55); }
+  .archive-tooltip:has(.archive-tooltip-btn:hover)::after { border-top-color: rgba(79,168,58,0.55); }
+
+  .archive-tooltip-label { font-size: 0.48rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.3rem; }
+  .archive-tooltip-title { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold-pale); letter-spacing: 0.07em; margin-bottom: 0.5rem; line-height: 1.4; }
+  .archive-tooltip-divider { width: 20px; height: 1px; background: rgba(201,168,76,0.2); margin-bottom: 0.6rem; }
+  .archive-tooltip-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 0.8rem; }
+  .archive-tooltip-btn {
+    display: inline-block; font-family: 'Raleway', sans-serif;
+    font-size: 0.55rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(201,168,76,0.4);
+    padding: 0.45rem 0.9rem; text-decoration: none;
+    background: rgba(201,168,76,0.05);
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .archive-tooltip-btn:hover { color: var(--fel-bright); border-color: rgba(79,168,58,0.7); background: rgba(79,168,58,0.08); }
+
+  /* Some tooltips open downward if marker is near top */
+  .archive-marker.below .archive-tooltip {
+    bottom: auto; top: calc(100% + 14px);
+  }
+  .archive-marker.below .archive-tooltip::after {
+    top: auto; bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: rgba(201,168,76,0.3);
+  }
+  .archive-marker.below .archive-tooltip:has(.archive-tooltip-btn:hover)::after {
+    border-bottom-color: rgba(79,168,58,0.55);
+  }
+
+  /* CONTENT BELOW HERO */
+  .archives-content { padding: 6rem 2rem 8rem; max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 400; color: var(--gold-pale); letter-spacing: 0.1em; margin-bottom: 2rem; }
+  .archives-intro { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-muted); line-height: 2; max-width: 700px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border-red); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--gold-dim); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
   .footer-text { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim); }
+
+  #spotlight { position: fixed; pointer-events: none; z-index: 9999; width: 400px; height: 400px; border-radius: 50%; transform: translate(-50%, -50%); transition: background 0.4s ease; top: -9999px; left: -9999px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.5rem 1.5rem; }
+    .nav-links { display: none; }
+    .archives-hero { height: 70vh; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
 </style>
 </head>
 <body>
+
 <nav>
   <a href="index.html" class="nav-logo">The Sunfury Accord</a>
-  <a href="index.html" class="nav-back">← Back</a>
+  <ul class="nav-links">
+    <li><a href="ranks.html">Codex</a></li>
+    <li><a href="triad.html">The Triad</a></li>
+    <li><a href="index.html#recruitment">Join</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-toggle">More</button>
+      <div class="nav-dropdown-menu">
+        <a href="gallery.html">Gallery</a>
+        <a href="lore.html">Lore</a>
+        <a href="index.html#manifest">Manifest</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </li>
+  </ul>
 </nav>
+
 <div class="page-header">
-  <p class="section-label">Lore</p>
-  <h1 class="page-title">The History of the Accord</h1>
-  <p class="page-intro">Writings, accounts, and context for those who wish to understand what brought the Accord into being — and what drives it forward.</p>
+  <p class="section-label">Isle of Quel'Danas</p>
+  <h1 style="font-family:'Cinzel',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:400;color:var(--gold-pale);letter-spacing:0.15em;margin-bottom:0.75rem;">The Archives</h1>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);">Knowledge is not inherited. It is seized.</p>
 </div>
-<div class="content">
-  <div class="placeholder-note">Lore entries coming soon.</div>
+
+<div class="archives-hero">
+  <img class="archives-hero-img" src="archives_bg.png" alt="The Archives">
+
+  <!--
+    MARKERS over bookshelves.
+  -->
+
+  <!-- LEFT SHELF -->
+  <div class="archive-marker below" style="left:8%;top:45%;">
+    <div class="archive-tooltip">
+      <p class="archive-tooltip-label">Codex Thal'anor · Vol. I</p>
+      <h3 class="archive-tooltip-title">Ash'theris val'norah</h3>
+      <div class="archive-tooltip-divider"></div>
+      <p class="archive-tooltip-text">Sin'dorei ven'thar mala'sheen. Quel'thalas anor'theras, val'sharaan ethrel'dorei thas'alah. Mana vel'shan dorei'ana sin'anor thas.</p>
+      <a href="#" class="archive-tooltip-btn">Read →</a>
+    </div>
+    <div class="archive-marker-dot"></div>
+  </div>
+
+  <!-- LEFT-CENTER SHELF -->
+  <div class="archive-marker" style="left:22%;top:38%;">
+    <div class="archive-tooltip">
+      <p class="archive-tooltip-label">Codex Thal'anor · Vol. II</p>
+      <h3 class="archive-tooltip-title">Vel'noras eth'dorei</h3>
+      <div class="archive-tooltip-divider"></div>
+      <p class="archive-tooltip-text">Thal'dorei sin'shar mana'val. Quel'anor theras dorei'vel, ash'norah sin'thal veleth'aran mala dorei. Sha'las anor thas vel'shan.</p>
+      <a href="#" class="archive-tooltip-btn">Read →</a>
+    </div>
+    <div class="archive-marker-dot"></div>
+  </div>
+
+  <!-- CENTER-BACK SHELF -->
+  <div class="archive-marker" style="left:50%;top:55%;">
+    <div class="archive-tooltip">
+      <p class="archive-tooltip-label">Thal'dorei Compendium</p>
+      <h3 class="archive-tooltip-title">Mana'sheel vel'anor</h3>
+      <div class="archive-tooltip-divider"></div>
+      <p class="archive-tooltip-text">Aran'vel dorei sin'thal. Mala'sheen quel'norah ethrel vel'dorei anor'thas. Sha'dorei thal mana veleth'sin anor'shan.</p>
+      <a href="#" class="archive-tooltip-btn">Read →</a>
+    </div>
+    <div class="archive-marker-dot"></div>
+  </div>
+
+  <!-- RIGHT-CENTER SHELF -->
+  <div class="archive-marker" style="left:72%;top:40%;">
+    <div class="archive-tooltip">
+      <p class="archive-tooltip-label">Sunfury Report · III</p>
+      <h3 class="archive-tooltip-title">Anor'vel sha'thal dorei</h3>
+      <div class="archive-tooltip-divider"></div>
+      <p class="archive-tooltip-text">Vel'shan mana dorei thal'anor. Sin'ethrel quel'sha vel norah'dorei mala thas. Anor sha'vel thal dorei vel'sin mana'aran.</p>
+      <a href="#" class="archive-tooltip-btn">Read →</a>
+    </div>
+    <div class="archive-marker-dot"></div>
+  </div>
+
+  <!-- RIGHT SHELF -->
+  <div class="archive-marker" style="left:88%;top:42%;">
+    <div class="archive-tooltip" style="left:auto;right:0;transform:none;">
+      <p class="archive-tooltip-label">Sunfury Report · IV</p>
+      <h3 class="archive-tooltip-title">Thas'vel dorei aran'sin</h3>
+      <div class="archive-tooltip-divider"></div>
+      <p class="archive-tooltip-text">Dorei vel'thal sha mana'sin. Quel'norah anor ethrel'vel thas dorei sin'aran mala. Vel sha'thal dorei mana anor'vel norah.</p>
+      <a href="#" class="archive-tooltip-btn">Read →</a>
+    </div>
+    <div class="archive-marker-dot"></div>
+  </div>
+
 </div>
+
+<!-- CONTENT BELOW -->
+<div class="archives-content">
+  <p class="section-label">The Sunfury Accord</p>
+  <h2 class="section-title">Public Record</h2>
+  <p class="archives-intro">The findings of the Sunfury Accord are committed to record and dispatched to Magisters' Terrace on a regular basis. Those reports deemed suitable for wider circulation are housed within the Archives, open to those of Quel'Thalas who seek knowledge over comfort.</p>
+</div>
+
 <footer>
   <div class="footer-logo">The Sunfury Accord</div>
+  <div class="footer-links">
+    <a href="ranks.html">Codex</a>
+    <a href="index.html#manifest">Manifest</a>
+    <a href="index.html#recruitment">Join</a>
+  </div>
   <div class="footer-text">Argent Dawn EU &nbsp;·&nbsp; Midnight</div>
 </footer>
+
+<div id="spotlight"></div>
+
+<script>
+  // Tooltip pin — stays open when moving from marker to tooltip
+  document.querySelectorAll('.archive-marker').forEach(marker => {
+    const tooltip = marker.querySelector('.archive-tooltip');
+    let leaveTimer = null;
+    function show() { clearTimeout(leaveTimer); tooltip.classList.add('pinned'); }
+    function hide() { leaveTimer = setTimeout(() => tooltip.classList.remove('pinned'), 80); }
+    marker.addEventListener('mouseenter', show);
+    marker.addEventListener('mouseleave', hide);
+    tooltip.addEventListener('mouseenter', show);
+    tooltip.addEventListener('mouseleave', hide);
+  });
+
+  // Spotlight
+  const spotlight = document.getElementById('spotlight');
+  let isHoveringInteractive = false;
+  document.addEventListener('mousemove', e => {
+    spotlight.style.left = e.clientX + 'px';
+    spotlight.style.top = e.clientY + 'px';
+    spotlight.style.background = isHoveringInteractive
+      ? 'radial-gradient(circle, rgba(79,168,58,0.08) 0%, transparent 70%)'
+      : 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)';
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { isHoveringInteractive = true; });
+    el.addEventListener('mouseleave', () => { isHoveringInteractive = false; });
+  });
+</script>
 </body>
 </html>
