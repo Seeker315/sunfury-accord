@@ -55,15 +55,15 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: center top;
-    filter: brightness(0.65);
+    object-position: center bottom;
+    filter: brightness(0.75);
   }
 
-  /* Gradient overlays — darken bottom for transition */
+  /* Gradient — darken top for nav, keep bottom visible */
   .archives-hero::before {
     content: '';
     position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(to bottom, transparent 60%, rgba(9,8,10,0.95) 100%);
+    background: linear-gradient(to bottom, rgba(9,8,10,0.5) 0%, transparent 30%, transparent 75%, rgba(9,8,10,0.9) 100%);
     pointer-events: none;
   }
 
@@ -220,7 +220,7 @@
   -->
 
   <!-- LEFT SHELF -->
-  <div class="archive-marker below" style="left:8%;top:45%;">
+  <div class="archive-marker below" style="left:8%;top:65%;">
     <div class="archive-tooltip">
       <p class="archive-tooltip-label">Codex Thal'anor · Vol. I</p>
       <h3 class="archive-tooltip-title">Ash'theris val'norah</h3>
@@ -232,7 +232,7 @@
   </div>
 
   <!-- LEFT-CENTER SHELF -->
-  <div class="archive-marker" style="left:22%;top:38%;">
+  <div class="archive-marker" style="left:22%;top:60%;">
     <div class="archive-tooltip">
       <p class="archive-tooltip-label">Codex Thal'anor · Vol. II</p>
       <h3 class="archive-tooltip-title">Vel'noras eth'dorei</h3>
@@ -256,7 +256,7 @@
   </div>
 
   <!-- RIGHT-CENTER SHELF -->
-  <div class="archive-marker" style="left:72%;top:40%;">
+  <div class="archive-marker" style="left:72%;top:60%;">
     <div class="archive-tooltip">
       <p class="archive-tooltip-label">Sunfury Report · III</p>
       <h3 class="archive-tooltip-title">Anor'vel sha'thal dorei</h3>
@@ -268,7 +268,7 @@
   </div>
 
   <!-- RIGHT SHELF -->
-  <div class="archive-marker" style="left:88%;top:42%;">
+  <div class="archive-marker" style="left:88%;top:62%;">
     <div class="archive-tooltip" style="left:auto;right:0;transform:none;">
       <p class="archive-tooltip-label">Sunfury Report · IV</p>
       <h3 class="archive-tooltip-title">Thas'vel dorei aran'sin</h3>
