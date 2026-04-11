@@ -129,58 +129,107 @@
     position: absolute; transform: translate(-50%, -50%);
     cursor: pointer; z-index: 10;
   }
+  .map-marker:hover { z-index: 100; }
+
   .map-marker-dot {
-    width: 12px; height: 12px;
+    width: 16px; height: 16px;
     transform: rotate(45deg);
-    border: 1px solid var(--gold);
-    background: rgba(201,168,76,0.15);
-    transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
+    border: 1.5px solid var(--gold);
+    background: rgba(201,168,76,0.25);
     position: relative;
+    animation: markerglow 1.6s ease-in-out infinite;
   }
-  .map-marker.red .map-marker-dot { border-color: var(--red); background: rgba(122,26,26,0.2); }
+  @keyframes markerglow {
+    0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.4), 0 0 2px rgba(201,168,76,0.5) inset; }
+    50%       { box-shadow: 0 0 22px rgba(201,168,76,0.95), 0 0 8px rgba(201,168,76,0.7) inset; }
+  }
+
+  .map-marker.red .map-marker-dot {
+    border-color: #c03030;
+    background: rgba(160,32,32,0.3);
+    animation: markerglowred 1.6s ease-in-out infinite;
+  }
+  @keyframes markerglowred {
+    0%, 100% { box-shadow: 0 0 6px rgba(160,32,32,0.5), 0 0 2px rgba(160,32,32,0.5) inset; }
+    50%       { box-shadow: 0 0 22px rgba(160,32,32,1), 0 0 8px rgba(160,32,32,0.8) inset; }
+  }
+
   .map-marker:hover .map-marker-dot {
-    background: rgba(79,168,58,0.4); border-color: #4fa83a;
-    box-shadow: 0 0 14px rgba(79,168,58,0.6);
+    background: rgba(79,168,58,0.5);
+    border-color: #4fa83a;
+    box-shadow: 0 0 22px rgba(79,168,58,0.9);
+    animation: markerglowfel 1.2s ease-in-out infinite;
   }
+  @keyframes markerglowfel {
+    0%, 100% { box-shadow: 0 0 10px rgba(79,168,58,0.6); }
+    50%       { box-shadow: 0 0 28px rgba(79,168,58,1); }
+  }
+  .map-marker:hover .map-marker-dot::after {
+    border-color: rgba(79,168,58,0.7);
+  }
+
+  /* Expanding ring */
   .map-marker-dot::after {
-    content: ''; position: absolute; inset: -5px;
-    border: 1px solid rgba(201,168,76,0.3);
-    animation: mappulse 2.5s ease-in-out infinite;
+    content: ''; position: absolute; inset: -6px;
+    border: 1.5px solid rgba(201,168,76,0.6);
+    animation: mappulse 1.6s ease-out infinite;
   }
-  .map-marker.red .map-marker-dot::after { border-color: rgba(122,26,26,0.5); }
+  .map-marker.red .map-marker-dot::after { border-color: rgba(160,32,32,0.7); }
   @keyframes mappulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50%       { opacity: 0;   transform: scale(2); }
+    0%   { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 0;   transform: scale(3); }
   }
 
   .map-tooltip {
     position: absolute;
-    bottom: calc(100% + 16px);
+    bottom: calc(100% + 12px);
     left: 50%; transform: translateX(-50%);
-    background: rgba(9,8,10,0.97);
-    border: 1px solid rgba(201,168,76,0.3);
-    padding: 1rem 1.25rem;
-    min-width: 200px; max-width: 280px;
+    background: rgba(9,8,10,0.99);
+    border: 1px solid rgba(201,168,76,0.35);
+    padding: 1.2rem 1.5rem;
+    min-width: 240px; max-width: 300px;
     pointer-events: none;
-    opacity: 0; transition: opacity 0.2s;
-    text-align: left; z-index: 50;
+    opacity: 0; transition: opacity 0.15s;
+    text-align: left; z-index: 500;
   }
+  .map-marker:hover .map-tooltip { opacity: 1; pointer-events: all; }
+  .map-tooltip.pinned { opacity: 1; pointer-events: all; }
   .map-tooltip::after {
     content: ''; position: absolute;
     top: 100%; left: 50%; transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: rgba(201,168,76,0.3);
+    border-top-color: rgba(201,168,76,0.35);
   }
-  .map-marker.red .map-tooltip { border-color: rgba(122,26,26,0.5); }
-  .map-marker.red .map-tooltip::after { border-top-color: rgba(122,26,26,0.5); }
-  .map-marker:hover .map-tooltip { opacity: 1; }
+  .map-marker.red .map-tooltip { border-color: rgba(160,32,32,0.5); }
+  .map-marker.red .map-tooltip::after { border-top-color: rgba(160,32,32,0.5); }
 
   .map-tooltip-label { font-size: 0.48rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.3rem; }
   .map-marker.red .map-tooltip-label { color: rgba(160,50,50,0.8); }
   .map-tooltip-title { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold-pale); letter-spacing: 0.06em; margin-bottom: 0.5rem; line-height: 1.4; }
   .map-tooltip-divider { width: 20px; height: 1px; background: rgba(201,168,76,0.2); margin-bottom: 0.5rem; }
   .map-marker.red .map-tooltip-divider { background: rgba(122,26,26,0.4); }
-  .map-tooltip-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+  .map-tooltip-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.8rem; }
+
+  .map-tooltip-btn {
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.55rem; font-weight: 400;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 0.45rem 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    background: rgba(201,168,76,0.06);
+    cursor: pointer;
+    pointer-events: all;
+  }
+  .map-tooltip-btn:hover { color: #6dcc55; border-color: rgba(79,168,58,0.7); background: rgba(79,168,58,0.08); }
+  /* Tooltip border goes fel green only when hovering the button */
+  .map-tooltip:has(.map-tooltip-btn:hover) { border-color: rgba(79,168,58,0.55); }
+  .map-tooltip:has(.map-tooltip-btn:hover)::after { border-top-color: rgba(79,168,58,0.55); }
+  .map-marker.red .map-tooltip-btn { color: #d05050; border-color: rgba(160,32,32,0.45); background: rgba(160,32,32,0.06); }
+  .map-marker.red .map-tooltip-btn:hover { color: #6dcc55; border-color: rgba(79,168,58,0.7); background: rgba(79,168,58,0.08); }
 
   .map-footer { display: flex; justify-content: flex-end; margin-top: 1rem; }
   .map-footer a { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
@@ -319,6 +368,7 @@
           <h3 class="map-tooltip-title">Sunfury Accord Headquarters</h3>
           <div class="map-tooltip-divider"></div>
           <p class="map-tooltip-text">The operational heart of the Accord. From here, missions are planned, intelligence assessed, and strategy forged.</p>
+          <a href="#" class="map-tooltip-btn">Visit →</a>
         </div>
         <div class="map-marker-dot"></div>
       </div>
@@ -330,6 +380,7 @@
           <h3 class="map-tooltip-title">Villa Wrathsworn</h3>
           <div class="map-tooltip-divider"></div>
           <p class="map-tooltip-text">Seat of the Archon. Private residence of Magister Vael'tharyn Wrathsworn. Its halls have hosted banquets, councils, and quiet deliberations alike.</p>
+          <a href="#" class="map-tooltip-btn">Visit →</a>
         </div>
         <div class="map-marker-dot"></div>
       </div>
@@ -341,6 +392,19 @@
           <h3 class="map-tooltip-title">Current Mission</h3>
           <div class="map-tooltip-divider"></div>
           <p class="map-tooltip-text">Whispers of Twilight cultist infiltrators moving through Fairbreeze and Sathel's Haven. The Accord has dispatched agents to assess the extent of the corruption.</p>
+          <a href="#" class="map-tooltip-btn">Read more →</a>
+        </div>
+        <div class="map-marker-dot"></div>
+      </div>
+
+      <!-- QUEL'DANAS — The Archives -->
+      <div class="map-marker" style="left:28%;top:13%;">
+        <div class="map-tooltip">
+          <p class="map-tooltip-label">Isle of Quel'Danas</p>
+          <h3 class="map-tooltip-title">The Archives</h3>
+          <div class="map-tooltip-divider"></div>
+          <p class="map-tooltip-text">The findings of the Sunfury Accord are committed to record and dispatched to Magisters' Terrace on a regular basis. Those reports deemed suitable for wider circulation are housed within the Archives, open to those of Quel'Thalas who seek knowledge over comfort.</p>
+          <a href="lore.html" class="map-tooltip-btn">Visit Archives →</a>
         </div>
         <div class="map-marker-dot"></div>
       </div>
@@ -588,6 +652,25 @@
   document.querySelectorAll(interactiveSelectors).forEach(el => {
     el.addEventListener('mouseenter', () => { isHoveringInteractive = true; });
     el.addEventListener('mouseleave', () => { isHoveringInteractive = false; });
+  });
+
+  // Map tooltip — pin open on marker enter, unpin on leave of both marker AND tooltip
+  document.querySelectorAll('.map-marker').forEach(marker => {
+    const tooltip = marker.querySelector('.map-tooltip');
+    let leaveTimer = null;
+
+    function showTooltip() {
+      clearTimeout(leaveTimer);
+      tooltip.classList.add('pinned');
+    }
+    function hideTooltip() {
+      leaveTimer = setTimeout(() => tooltip.classList.remove('pinned'), 80);
+    }
+
+    marker.addEventListener('mouseenter', showTooltip);
+    marker.addEventListener('mouseleave', hideTooltip);
+    tooltip.addEventListener('mouseenter', showTooltip);
+    tooltip.addEventListener('mouseleave', hideTooltip);
   });
 </script>
 </body>
