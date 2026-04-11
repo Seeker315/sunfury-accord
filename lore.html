@@ -42,28 +42,24 @@
   }
   .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 50% 40%, rgba(122,26,26,0.08) 0%, transparent 70%); pointer-events: none; }
 
-  /* HERO — full width library image, below header */
   .archives-hero {
     position: relative;
     width: 100%;
-    height: 80vh;
-    min-height: 500px;
     overflow: hidden;
   }
 
   .archives-hero-img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center bottom;
-    filter: brightness(0.75);
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: brightness(0.82);
   }
 
-  /* Gradient — darken top for nav, keep bottom visible */
+  /* Gradient — just darken the bottom edge for transition */
   .archives-hero::before {
     content: '';
     position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(to bottom, rgba(9,8,10,0.5) 0%, transparent 30%, transparent 75%, rgba(9,8,10,0.9) 100%);
+    background: linear-gradient(to bottom, transparent 80%, rgba(9,8,10,0.9) 100%);
     pointer-events: none;
   }
 
@@ -219,8 +215,8 @@
     MARKERS over bookshelves.
   -->
 
-  <!-- LEFT SHELF -->
-  <div class="archive-marker below" style="left:8%;top:65%;">
+  <!-- LEFT SHELF — far left bookcase -->
+  <div class="archive-marker below" style="left:6%;top:35%;">
     <div class="archive-tooltip">
       <p class="archive-tooltip-label">Codex Thal'anor · Vol. I</p>
       <h3 class="archive-tooltip-title">Ash'theris val'norah</h3>
@@ -232,7 +228,7 @@
   </div>
 
   <!-- LEFT-CENTER SHELF -->
-  <div class="archive-marker" style="left:22%;top:60%;">
+  <div class="archive-marker below" style="left:18%;top:28%;">
     <div class="archive-tooltip">
       <p class="archive-tooltip-label">Codex Thal'anor · Vol. II</p>
       <h3 class="archive-tooltip-title">Vel'noras eth'dorei</h3>
@@ -244,7 +240,7 @@
   </div>
 
   <!-- CENTER-BACK SHELF -->
-  <div class="archive-marker" style="left:50%;top:55%;">
+  <div class="archive-marker below" style="left:50%;top:22%;">
     <div class="archive-tooltip">
       <p class="archive-tooltip-label">Thal'dorei Compendium</p>
       <h3 class="archive-tooltip-title">Mana'sheel vel'anor</h3>
@@ -256,7 +252,7 @@
   </div>
 
   <!-- RIGHT-CENTER SHELF -->
-  <div class="archive-marker" style="left:72%;top:60%;">
+  <div class="archive-marker" style="left:76%;top:28%;">
     <div class="archive-tooltip">
       <p class="archive-tooltip-label">Sunfury Report · III</p>
       <h3 class="archive-tooltip-title">Anor'vel sha'thal dorei</h3>
@@ -267,8 +263,8 @@
     <div class="archive-marker-dot"></div>
   </div>
 
-  <!-- RIGHT SHELF -->
-  <div class="archive-marker" style="left:88%;top:62%;">
+  <!-- RIGHT SHELF — far right bookcase -->
+  <div class="archive-marker" style="left:91%;top:32%;">
     <div class="archive-tooltip" style="left:auto;right:0;transform:none;">
       <p class="archive-tooltip-label">Sunfury Report · IV</p>
       <h3 class="archive-tooltip-title">Thas'vel dorei aran'sin</h3>
