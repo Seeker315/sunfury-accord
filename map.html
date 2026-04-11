@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Accord — Quel'Thalas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-pale: #f0dfa0;
+    --gold-dim: #7a6028;
+    --red: #7a1a1a;
+    --red-dim: #3e0e0e;
+    --fel: #4fa83a;
+    --fel-border: rgba(79,168,58,0.35);
+    --bg: #09080a;
+    --bg-card: #0d0b0e;
+    --text: #e8dfc8;
+    --text-muted: #9a9080;
+    --text-dim: #5a5248;
+    --border-red: rgba(122,26,26,0.35);
+    --border-gold: rgba(201,168,76,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Raleway', sans-serif; font-weight: 300; line-height: 1.8; overflow-x: hidden; min-height: 100vh; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(9,8,10,0.97) 0%, transparent 100%); }
+  .nav-logo { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; transition: color 0.3s; background: none; border: none; font-family: 'Raleway', sans-serif; padding: 0; }
+  .nav-dropdown:hover .nav-dropdown-toggle { color: var(--gold); }
+  .nav-dropdown-menu { position: absolute; top: 100%; right: 0; background: rgba(9,8,10,0.97); border: 1px solid var(--border-red); padding: 0.5rem 0; min-width: 160px; opacity: 0; pointer-events: none; transition: opacity 0.2s; margin-top: 0.75rem; }
+  .nav-dropdown-menu::before { content: ''; position: absolute; top: -0.75rem; left: 0; right: 0; height: 0.75rem; }
+  .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: all; }
+  .nav-dropdown-menu a { display: block; padding: 0.6rem 1.25rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s, background 0.2s; }
+  .nav-dropdown-menu a:hover { color: var(--gold); background: rgba(201,168,76,0.04); }
+
+  /* PAGE HEADER */
+  .page-header { padding: 10rem 2rem 3rem; text-align: center; border-bottom: 1px solid var(--border-red); position: relative; }
+  .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 50% 40%, rgba(122,26,26,0.08) 0%, transparent 70%); pointer-events: none; }
+  .section-label { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+  .page-title { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 400; color: var(--gold-pale); letter-spacing: 0.15em; margin-bottom: 0.75rem; }
+  .page-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--text-muted); }
+
+  /* MAP CONTAINER */
+  .map-section { padding: 4rem 2rem 6rem; max-width: 1200px; margin: 0 auto; }
+
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    border: 1px solid var(--border-gold);
+    box-shadow: 0 0 60px rgba(201,168,76,0.04), 0 0 120px rgba(122,26,26,0.06);
+  }
+
+  .map-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: brightness(0.92);
+  }
+
+  /* MARKERS */
+  .marker {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .marker-dot {
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    border: 1px solid var(--gold);
+    background: rgba(201,168,76,0.15);
+    transition: background 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+
+  .marker:hover .marker-dot,
+  .marker.active .marker-dot {
+    background: rgba(201,168,76,0.5);
+    box-shadow: 0 0 12px rgba(201,168,76,0.5);
+  }
+
+  /* Pulse ring */
+  .marker-dot::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border: 1px solid rgba(201,168,76,0.25);
+    transform: rotate(0deg);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%       { opacity: 0;   transform: scale(1.8); }
+  }
+
+  /* MARKER LABEL */
+  .marker-label {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .marker:hover .marker-label,
+  .marker.active .marker-label { opacity: 1; }
+
+  /* INFO PANEL */
+  .info-panel {
+    margin-top: 2.5rem;
+    border: 1px solid var(--border-gold);
+    background: rgba(13,11,14,0.95);
+    padding: 2.5rem 3rem;
+    position: relative;
+    min-height: 140px;
+    transition: opacity 0.4s;
+    opacity: 0;
+  }
+  .info-panel.visible { opacity: 1; }
+
+  .info-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px; height: 100%;
+    background: var(--red);
+  }
+
+  .info-location {
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .info-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 400;
+    color: var(--gold-pale);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  .info-divider {
+    width: 30px; height: 1px;
+    background: var(--border-red);
+    margin-bottom: 1rem;
+  }
+
+  .info-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 700px;
+  }
+
+  .info-empty {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    letter-spacing: 0.1em;
+  }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border-red); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--gold-dim); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-text { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.5rem 1.5rem; }
+    .nav-links { display: none; }
+    .info-panel { padding: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">The Sunfury Accord</a>
+  <ul class="nav-links">
+    <li><a href="ranks.html">Codex</a></li>
+    <li><a href="triad.html">The Triad</a></li>
+    <li><a href="#" class="active">Map</a></li>
+    <li><a href="index.html#recruitment">Join</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-toggle">More</button>
+      <div class="nav-dropdown-menu">
+        <a href="gallery.html">Gallery</a>
+        <a href="lore.html">Lore</a>
+        <a href="index.html#manifest">Manifest</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="section-label">Theatre of Operations</p>
+  <h1 class="page-title">Quel'Thalas</h1>
+  <p class="page-subtitle">Select a location to learn more.</p>
+</div>
+
+<div class="map-section">
+  <div class="map-wrap" id="mapWrap">
+    <img src="Map_of_Quel_thalas.png" alt="Map of Quel'Thalas" draggable="false">
+
+    <!--
+      Marker positions are in % of image width/height.
+      Silvermoon: ~31% from left, ~37% from top
+      Villa Wrathsworn (Eversong): ~21% from left, ~67% from top
+    -->
+
+    <div class="marker" style="left: 31%; top: 37%;"
+         data-location="Silvermoon City"
+         data-title="Sunfury Accord Headquarters"
+         data-text="The operational heart of the Accord. From here, missions are planned, intelligence assessed, and strategy forged. Beyond its function as a command center, it serves as a living space for the Accord's members. Where ideas surface, alliances form, and the work of mastery continues.">
+      <div class="marker-label">Silvermoon</div>
+      <div class="marker-dot"></div>
+    </div>
+
+    <div class="marker" style="left: 21%; top: 67%;"
+         data-location="Eversong Woods"
+         data-title="Villa Wrathsworn"
+         data-text="Seat of the Archon. Nestled near the golden mists of Goldenmist Village, Villa Wrathsworn is the private residence of Magister Vael'tharyn Wrathsworn. Its halls have hosted banquets, councils, and quiet deliberations alike. A place where the Accord's members gather not as operatives, but as minds.">
+      <div class="marker-label">Eversong Woods</div>
+      <div class="marker-dot"></div>
+    </div>
+
+  </div>
+
+  <!-- INFO PANEL -->
+  <div class="info-panel" id="infoPanel">
+    <div class="info-empty" id="infoEmpty">Select a location on the map.</div>
+    <div id="infoContent" style="display:none;">
+      <p class="info-location" id="infoLocation"></p>
+      <h2 class="info-title" id="infoTitle"></h2>
+      <div class="info-divider"></div>
+      <p class="info-text" id="infoText"></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">The Sunfury Accord</div>
+  <div class="footer-links">
+    <a href="ranks.html">Codex</a>
+    <a href="index.html#manifest">Manifest</a>
+    <a href="index.html#recruitment">Join</a>
+  </div>
+  <div class="footer-text">Argent Dawn EU &nbsp;·&nbsp; Midnight</div>
+</footer>
+
+<script>
+  const markers   = document.querySelectorAll('.marker');
+  const panel     = document.getElementById('infoPanel');
+  const empty     = document.getElementById('infoEmpty');
+  const content   = document.getElementById('infoContent');
+  const locEl     = document.getElementById('infoLocation');
+  const titleEl   = document.getElementById('infoTitle');
+  const textEl    = document.getElementById('infoText');
+
+  let active = null;
+
+  markers.forEach(marker => {
+    marker.addEventListener('click', () => {
+      if (active === marker) {
+        // Deselect
+        marker.classList.remove('active');
+        panel.classList.remove('visible');
+        empty.style.display = 'flex';
+        content.style.display = 'none';
+        active = null;
+        return;
+      }
+
+      if (active) active.classList.remove('active');
+      active = marker;
+      marker.classList.add('active');
+
+      locEl.textContent   = marker.dataset.location;
+      titleEl.textContent = marker.dataset.title;
+      textEl.textContent  = marker.dataset.text;
+
+      empty.style.display   = 'none';
+      content.style.display = 'block';
+      panel.classList.add('visible');
+
+      // Smooth scroll to panel on mobile
+      if (window.innerWidth < 768) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
