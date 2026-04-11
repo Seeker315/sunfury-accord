@@ -119,6 +119,73 @@
 
   #manifest { border-top: 1px solid var(--border-red); scroll-margin-top: 5rem; }
 
+  /* MAP SECTION */
+  #map-section { border-top: 1px solid var(--border-red); padding: 5rem 2rem; }
+  .map-section-inner { max-width: 1100px; margin: 0 auto; }
+  .map-wrap { position: relative; width: 100%; border: 1px solid rgba(201,168,76,0.15); box-shadow: 0 0 60px rgba(201,168,76,0.03); }
+  .map-wrap img { width: 100%; height: auto; display: block; filter: brightness(0.9); }
+
+  .map-marker {
+    position: absolute; transform: translate(-50%, -50%);
+    cursor: pointer; z-index: 10;
+  }
+  .map-marker-dot {
+    width: 12px; height: 12px;
+    transform: rotate(45deg);
+    border: 1px solid var(--gold);
+    background: rgba(201,168,76,0.15);
+    transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .map-marker.red .map-marker-dot { border-color: var(--red); background: rgba(122,26,26,0.2); }
+  .map-marker:hover .map-marker-dot {
+    background: rgba(79,168,58,0.4); border-color: #4fa83a;
+    box-shadow: 0 0 14px rgba(79,168,58,0.6);
+  }
+  .map-marker-dot::after {
+    content: ''; position: absolute; inset: -5px;
+    border: 1px solid rgba(201,168,76,0.3);
+    animation: mappulse 2.5s ease-in-out infinite;
+  }
+  .map-marker.red .map-marker-dot::after { border-color: rgba(122,26,26,0.5); }
+  @keyframes mappulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50%       { opacity: 0;   transform: scale(2); }
+  }
+
+  .map-tooltip {
+    position: absolute;
+    bottom: calc(100% + 16px);
+    left: 50%; transform: translateX(-50%);
+    background: rgba(9,8,10,0.97);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 1rem 1.25rem;
+    min-width: 200px; max-width: 280px;
+    pointer-events: none;
+    opacity: 0; transition: opacity 0.2s;
+    text-align: left; z-index: 50;
+  }
+  .map-tooltip::after {
+    content: ''; position: absolute;
+    top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(201,168,76,0.3);
+  }
+  .map-marker.red .map-tooltip { border-color: rgba(122,26,26,0.5); }
+  .map-marker.red .map-tooltip::after { border-top-color: rgba(122,26,26,0.5); }
+  .map-marker:hover .map-tooltip { opacity: 1; }
+
+  .map-tooltip-label { font-size: 0.48rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.3rem; }
+  .map-marker.red .map-tooltip-label { color: rgba(160,50,50,0.8); }
+  .map-tooltip-title { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold-pale); letter-spacing: 0.06em; margin-bottom: 0.5rem; line-height: 1.4; }
+  .map-tooltip-divider { width: 20px; height: 1px; background: rgba(201,168,76,0.2); margin-bottom: 0.5rem; }
+  .map-marker.red .map-tooltip-divider { background: rgba(122,26,26,0.4); }
+  .map-tooltip-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+
+  .map-footer { display: flex; justify-content: flex-end; margin-top: 1rem; }
+  .map-footer a { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
+  .map-footer a:hover { color: var(--gold); }
+
   .manifest-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 2; color: var(--text); max-width: 720px; }
   .manifest-text p { margin-bottom: 1.5rem; }
 
@@ -235,6 +302,53 @@
   <div class="cta-group">
     <a href="#recruitment" class="btn-primary">Apply</a>
     <a href="#manifest" class="btn-ghost">Read the Manifest</a>
+  </div>
+</div>
+
+<div id="map-section">
+  <div class="map-section-inner reveal">
+    <p class="section-label">Theatre of Operations</p>
+    <h2 class="section-title" style="margin-bottom:2rem;">Quel'Thalas</h2>
+    <div class="map-wrap">
+      <img src="Map_of_Quel_thalas.png" alt="Map of Quel'Thalas" draggable="false">
+
+      <!-- SILVERMOON -->
+      <div class="map-marker" style="left:31%;top:40%;">
+        <div class="map-tooltip">
+          <p class="map-tooltip-label">Silvermoon City</p>
+          <h3 class="map-tooltip-title">Sunfury Accord Headquarters</h3>
+          <div class="map-tooltip-divider"></div>
+          <p class="map-tooltip-text">The operational heart of the Accord. From here, missions are planned, intelligence assessed, and strategy forged.</p>
+        </div>
+        <div class="map-marker-dot"></div>
+      </div>
+
+      <!-- VILLA WRATHSWORN -->
+      <div class="map-marker" style="left:21%;top:67%;">
+        <div class="map-tooltip">
+          <p class="map-tooltip-label">Eversong Woods</p>
+          <h3 class="map-tooltip-title">Villa Wrathsworn</h3>
+          <div class="map-tooltip-divider"></div>
+          <p class="map-tooltip-text">Seat of the Archon. Private residence of Magister Vael'tharyn Wrathsworn. Its halls have hosted banquets, councils, and quiet deliberations alike.</p>
+        </div>
+        <div class="map-marker-dot"></div>
+      </div>
+
+      <!-- FAIRBREEZE — Active Mission -->
+      <div class="map-marker red" style="left:27%;top:50%;">
+        <div class="map-tooltip">
+          <p class="map-tooltip-label">Active Mission · Fairbreeze Village</p>
+          <h3 class="map-tooltip-title">Current Mission</h3>
+          <div class="map-tooltip-divider"></div>
+          <p class="map-tooltip-text">Whispers of Twilight cultist infiltrators moving through Fairbreeze and Sathel's Haven. The Accord has dispatched agents to assess the extent of the corruption.</p>
+        </div>
+        <div class="map-marker-dot"></div>
+      </div>
+
+    </div>
+    <div class="map-footer">
+      <a href="map.html">View full map →</a>
+    </div>
   </div>
 </div>
 
