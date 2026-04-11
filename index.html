@@ -96,7 +96,7 @@
       radial-gradient(ellipse 60% 50% at 50% 60%, rgba(122,26,26,0.15) 0%, transparent 65%);
   }
 
-  .hero-line { width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, var(--red-dim)); margin: 0 auto 3rem; }
+  .hero-line { display: none; }
   .hero-eyebrow { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem; }
 
   h1 { font-family: 'Cinzel', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 400; letter-spacing: 0.15em; color: var(--gold-pale); line-height: 1.1; margin-bottom: 1rem; }
@@ -248,7 +248,8 @@
   .manifest-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 2; color: var(--text); max-width: 720px; }
   .manifest-text p { margin-bottom: 1.5rem; }
 
-  .manifest-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--gold); border-left: 2px solid var(--red); padding-left: 2rem; margin: 3rem 0; line-height: 1.6; }
+  .manifest-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--gold); border-left: 2px solid var(--red); padding-left: 2rem; margin: 3rem 0; line-height: 1.6; transition: color 0.3s, border-color 0.3s; cursor: default; }
+  .manifest-quote:hover { color: var(--fel-pale); border-left-color: var(--fel); }
 
   #story { border-top: 1px solid var(--border-red); scroll-margin-top: 5rem; }
 
@@ -451,13 +452,15 @@
 <div id="story">
   <section class="reveal">
     <p class="section-label">II. Who We Are</p>
-    <h2 class="section-title">Not an Order. Not a Brotherhood.</h2>
+    <h2 class="section-title">A decision not made.<br><span style="font-size:0.75em;">Is a decision made by others.</span></h2>
     <div class="ornament-line"><div class="ornament-dot"></div></div>
     <div class="story-grid">
       <div class="story-text">
         <p>The Accord is a gathering of individuals who share a single premise. We are united by the refusal to let either define what we become.</p>
         <p>We are not united by faith or by grief. Quel'Thalas has bled for its dependencies. The Accord exists to end them.</p>
         <p>Those who join and preach submission to any cosmic force have fundamentally misunderstood what they signed up for. We dissect these forces. We do not kneel to them.</p>
+        <p>Three branches. One premise. The Seekers investigate what others will not touch. The Vanguard holds what others cannot defend. The Ciphers build what others cannot see. Each answers to no force greater than their own will and to the Accord.</p>
+        <p style="margin-top:2rem;"><a href="ranks.html" class="btn-ghost">Learn more about the Guild Structure</a></p>
       </div>
       <div class="story-pillars">
         <div class="pillar red-accent">
@@ -514,43 +517,6 @@
   </section>
 </div>
 
-<div id="gallery">
-  <div class="inner reveal">
-    <p class="section-label">IV. Gallery</p>
-    <h2 class="section-title">From the Field</h2>
-    <div class="ornament-line"><div class="ornament-dot"></div></div>
-  </div>
-  <div class="gallery-grid">
-    <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event I</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event II</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event III</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event IV</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event V</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Screenshot · Event VI</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-  </div>
-  <div style="text-align: center; padding: 2rem;">
-    <a href="gallery.html" class="btn-ghost">View all</a>
-  </div>
-</div>
-
-<div id="artwork" style="border-top: 1px solid var(--border-red); max-width: 100%; padding: 0;">
-  <div class="inner reveal">
-    <p class="section-label">V. Artwork</p>
-    <h2 class="section-title">The Accord Illustrated</h2>
-    <div class="ornament-line"><div class="ornament-dot"></div></div>
-  </div>
-  <div class="gallery-grid">
-    <div class="gallery-cell"><div class="gallery-placeholder">Artwork · I</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Artwork · II</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Artwork · III</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Artwork · IV</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Artwork · V</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-    <div class="gallery-cell"><div class="gallery-placeholder">Artwork · VI</div><div class="gallery-overlay"><span class="gallery-overlay-text">View</span></div></div>
-  </div>
-  <div style="text-align: center; padding: 2rem;">
-    <a href="gallery.html" class="btn-ghost">View all</a>
-  </div>
-</div>
 
 <div id="recruitment">
   <section class="reveal">
