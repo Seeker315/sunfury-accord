@@ -82,7 +82,7 @@
   .flip-front, .flip-back { position: absolute; inset: 0; overflow: hidden; transition: opacity 0.35s ease, transform 0.35s ease; }
   .flip-front { background: #0e0606; display: flex; align-items: center; justify-content: center; opacity: 1; transform: scale(1); z-index: 1; }
   .flip-diamond { position: absolute; width: 70.7%; height: 70.7%; border: 1px solid rgba(158,28,28,0.3); transform: rotate(45deg); top: 50%; left: 50%; translate: -50% -50%; transition: border-color 0.3s; pointer-events: none; z-index: 0; }
-  .flip-rank { font-family: "Cinzel", serif; font-size: 0.95rem; font-weight: 400; color: var(--red-pale); letter-spacing: 0.2em; position: absolute; z-index: 2; text-align: center; top: 50%; left: 0; right: 0; transform: translateY(-50%); transition: color 0.3s; }
+  .flip-rank { font-family: "Cinzel", serif; font-size: 0.95rem; font-weight: 400; color: var(--red-pale); letter-spacing: 0.2em; position: relative; z-index: 2; text-align: center; transition: color 0.3s; }
   .flip-tier-label { font-size: 0.45rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(158,28,28,0.35); position: relative; z-index: 2; text-align: center; margin-top: 0.4rem; transition: color 0.3s; }
   .flip-back { padding: 1.75rem 1.75rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: scale(0.97); background: #0e0606; transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s; overflow: hidden; z-index: 1; }
   .flip-wrap:hover .flip-front { opacity: 0; transform: scale(0.97); }
