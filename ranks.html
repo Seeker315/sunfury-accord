@@ -76,16 +76,91 @@
 
   .rank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-red); }
   .rank-branch { background: var(--bg-card); padding: 2rem 1.5rem; }
-  .branch-header { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.2em; color: var(--red-pale); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-red); }
-  .rank-item { padding: 0.75rem 0; border-bottom: 1px solid rgba(158,28,28,0.08); }
-  .rank-name { font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 400; color: var(--text); letter-spacing: 0.1em; }
-  .rank-tier { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; margin-top: 0.1rem; }
-  .rank-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.35rem; }
+  .branch-header { font-family: "Cinzel", serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.2em; color: var(--red-pale); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-red); }
 
-  .adherent-bar { background: var(--bg-surface); border: 1px solid var(--border-red); padding: 1.5rem; margin-top: 1.5rem; }
-  .adherent-bar .rank-name { color: var(--text-muted); font-size: 0.85rem; }
-  .adherent-bar .rank-tier { color: var(--text-dim); margin-top: 0.1rem; }
-  .adherent-bar .rank-desc { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; }
+  .flip-wrap { position: relative; aspect-ratio: 1; cursor: pointer; transition: border-color 0.3s; overflow: visible; isolation: isolate; }
+  .flip-front, .flip-back { position: absolute; inset: 0; overflow: hidden; transition: opacity 0.35s ease, transform 0.35s ease; }
+  .flip-front { background: #0e0606; display: flex; align-items: center; justify-content: center; opacity: 1; transform: scale(1); z-index: 1; }
+  .flip-diamond { position: absolute; width: 70.7%; height: 70.7%; border: 1px solid rgba(158,28,28,0.3); transform: rotate(45deg); top: 50%; left: 50%; translate: -50% -50%; transition: border-color 0.3s; pointer-events: none; z-index: 0; }
+  .flip-rank { font-family: "Cinzel", serif; font-size: 0.95rem; font-weight: 400; color: var(--red-pale); letter-spacing: 0.2em; position: absolute; z-index: 2; text-align: center; top: 50%; left: 0; right: 0; transform: translateY(-50%); transition: color 0.3s; }
+  .flip-tier-label { font-size: 0.45rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(158,28,28,0.35); position: relative; z-index: 2; text-align: center; margin-top: 0.4rem; transition: color 0.3s; }
+  .flip-back { padding: 1.75rem 1.75rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: scale(0.97); background: #0e0606; transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s; overflow: hidden; z-index: 1; }
+  .flip-wrap:hover .flip-front { opacity: 0; transform: scale(0.97); }
+  .flip-wrap:hover .flip-back { opacity: 1; transform: scale(1); }
+  .flip-back-rank { font-family: "Cinzel", serif; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.15em; margin-bottom: 0.4rem; color: var(--red-pale); transition: color 0.3s; }
+  .flip-tier { font-size: 0.48rem; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.8rem; color: rgba(158,28,28,0.6); transition: color 0.3s; }
+  .flip-divider { width: 20px; height: 1px; margin-bottom: 0.8rem; background: rgba(158,28,28,0.3); transition: background 0.3s; }
+  .flip-desc { font-family: "Cormorant Garamond", serif; font-size: 0.88rem; color: var(--text-muted); line-height: 1.65; }
+
+    .adherent-bar { background: var(--bg-surface); border: 1px solid var(--border-red); padding: 1.5rem; margin-top: 1.5rem; }
+  .adherent-bar .rank-name { color: var(--text-muted); font-size: 0.85rem; font-family: 'Cinzel', serif; letter-spacing: 0.1em; }
+  .adherent-bar .rank-tier { color: var(--text-dim); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.1rem; }
+  .adherent-bar .rank-desc { color: var(--text-muted); font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; margin-top: 0.5rem; }
+
+  /* Branch intro */
+  .branch-intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(158,28,28,0.15); }
+  .branch-intro { background: var(--bg-card); padding: 2rem; }
+  .seeker-intro  { border-top: 2px solid #4fa83a; }
+  .vanguard-intro { border-top: 2px solid #9e1c1c; }
+  .cipher-intro  { border-top: 2px solid #c9a84c; }
+  .branch-intro-name { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+  .seeker-intro  .branch-intro-name { color: #a8e090; }
+  .vanguard-intro .branch-intro-name { color: #f0a0a0; }
+  .cipher-intro  .branch-intro-name { color: #f0dfa0; }
+  /* Branch column layout */
+  .rank-matrix-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+  .branch-col { display: flex; flex-direction: column; }
+  .branch-col-header { background: #0e0606; padding: 1.75rem 1.5rem; border-top: 2px solid rgba(158,28,28,0.4); transition: border-color 0.3s, background 0.3s; text-align: center; }
+  .branch-col-name { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-pale); margin-bottom: 0.75rem; transition: color 0.3s; }
+  .branch-col-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--text-dim); line-height: 1.8; transition: color 0.3s; }
+
+  /* Tile-based hover — JS setzt data-hovered auf rank-matrix-wrap */
+  /* Ruhezustand Rauten */
+  .flip-diamond { border-color: rgba(158,28,28,0.3); }
+
+  /* Alle Rauten färben sich basierend auf der aktuell gehovered Kachel */
+  .rank-matrix-wrap[data-branch="seeker"] .flip-diamond { border-color: rgba(79,168,58,0.5); }
+  .rank-matrix-wrap[data-branch="seeker"] .flip-front { background: #060e06; }
+  .rank-matrix-wrap[data-branch="seeker"] .flip-back { background: #060e06; }
+  .rank-matrix-wrap[data-branch="seeker"] .branch-col-header { border-color: #4fa83a; background: #060e06; }
+  .rank-matrix-wrap[data-branch="seeker"] .branch-col-name { color: #a8e090; }
+  .rank-matrix-wrap[data-branch="seeker"] .branch-col-desc { color: var(--text-muted); }
+
+  .rank-matrix-wrap[data-branch="vanguard"] .flip-diamond { border-color: rgba(200,50,50,0.55); }
+  .rank-matrix-wrap[data-branch="vanguard"] .flip-front { background: #0e0404; }
+  .rank-matrix-wrap[data-branch="vanguard"] .flip-back { background: #0e0404; }
+  .rank-matrix-wrap[data-branch="vanguard"] .branch-col-header { border-color: #c42020; background: #0e0404; }
+  .rank-matrix-wrap[data-branch="vanguard"] .branch-col-name { color: #f0a0a0; }
+  .rank-matrix-wrap[data-branch="vanguard"] .branch-col-desc { color: var(--text-muted); }
+
+  .rank-matrix-wrap[data-branch="cipher"] .flip-diamond { border-color: rgba(201,168,76,0.5); }
+  .rank-matrix-wrap[data-branch="cipher"] .flip-front { background: #0e0c04; }
+  .rank-matrix-wrap[data-branch="cipher"] .flip-back { background: #0e0c04; }
+  .rank-matrix-wrap[data-branch="cipher"] .branch-col-header { border-color: #c9a84c; background: #0e0c04; }
+  .rank-matrix-wrap[data-branch="cipher"] .branch-col-name { color: #f0dfa0; }
+  .rank-matrix-wrap[data-branch="cipher"] .branch-col-desc { color: var(--text-muted); }
+
+  /* Flip-back Textfarben pro Branch */
+  .rank-matrix-wrap[data-branch="seeker"] .flip-back-rank { color: #a8e090; }
+  .rank-matrix-wrap[data-branch="seeker"] .flip-tier { color: rgba(79,168,58,0.6); }
+  .rank-matrix-wrap[data-branch="seeker"] .flip-divider { background: rgba(79,168,58,0.3); }
+  .rank-matrix-wrap[data-branch="seeker"] .flip-rank { color: #a8e090; }
+
+  .rank-matrix-wrap[data-branch="vanguard"] .flip-back-rank { color: #f0a0a0; }
+  .rank-matrix-wrap[data-branch="vanguard"] .flip-tier { color: rgba(200,50,50,0.7); }
+  .rank-matrix-wrap[data-branch="vanguard"] .flip-divider { background: rgba(200,50,50,0.4); }
+  .rank-matrix-wrap[data-branch="vanguard"] .flip-rank { color: #f0a0a0; }
+
+  .rank-matrix-wrap[data-branch="cipher"] .flip-back-rank { color: #f0dfa0; }
+  .rank-matrix-wrap[data-branch="cipher"] .flip-tier { color: rgba(201,168,76,0.6); }
+  .rank-matrix-wrap[data-branch="cipher"] .flip-divider { background: rgba(201,168,76,0.3); }
+  .rank-matrix-wrap[data-branch="cipher"] .flip-rank { color: #f0dfa0; }
+
+
+  .adherent-bar { background: var(--bg-surface); border: 1px solid var(--border-red); padding: 1.5rem; margin-top: 1px; }
+  .adherent-bar .rank-name { color: var(--text-muted); font-size: 0.85rem; font-family: 'Cinzel', serif; letter-spacing: 0.1em; }
+  .adherent-bar .rank-tier { color: var(--text-dim); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.1rem; }
+  .adherent-bar .rank-desc { color: var(--text-muted); font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; margin-top: 0.5rem; }
 
   .steps { display: flex; flex-direction: column; }
   .step { display: grid; grid-template-columns: 80px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border-red); align-items: start; }
@@ -139,114 +214,157 @@
 <div class="content">
 
   <div class="block reveal">
-    <p class="section-label">I. Leadership</p>
-    <h2 class="section-title">The Triad</h2>
-    <div class="ornament-line"><div class="ornament-dot"></div></div>
-    <div class="triad-grid">
-      <div class="triad-card">
-        <div class="triad-rank">Archon</div>
-        <div class="triad-tier">Tier III — Leadership</div>
-        <div class="triad-branch">Seeker Branch</div>
-        <div class="triad-desc">Directs the Seekers. Embodies wisdom and the mastery of power. The investigative arm of the Accord.</div>
-      </div>
-      <div class="triad-card">
-        <div class="triad-rank">Paragon</div>
-        <div class="triad-tier">Tier III — Leadership</div>
-        <div class="triad-branch">Vanguard Branch</div>
-        <div class="triad-desc">Directs the Vanguard. Embodies willpower, resolve, and the commitment to see things through.</div>
-      </div>
-      <div class="triad-card">
-        <div class="triad-rank">Consul</div>
-        <div class="triad-tier">Tier III — Leadership</div>
-        <div class="triad-branch">Cipher Branch</div>
-        <div class="triad-desc">Directs the Ciphers. Embodies diplomacy, connection, and the unseen architecture of the Accord.</div>
-      </div>
-    </div>
-    <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 1rem; line-height: 1.8;">
-      In the event of a deadlock, the founding member holds a tiebreaking function by personal designation. This authority belongs to the individual, not the title.
-    </p>
-    <div style="margin-top: 2rem;">
-      <a href="triad.html" style="font-family: 'Raleway', sans-serif; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red-pale); background: transparent; border: 1px solid var(--border-red); padding: 0.85rem 2rem; text-decoration: none; display: inline-block; transition: color 0.3s, border-color 0.3s;">Meet the Triad</a>
-    </div>
-  </div>
-
-  <div class="block reveal">
-    <p class="section-label">II. Organisation</p>
+    <p class="section-label">I. Organisation</p>
     <h2 class="section-title">The Three Branches</h2>
     <div class="ornament-line"><div class="ornament-dot"></div></div>
-    <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 1.5rem;">The Accord operates through three distinct branches, each representing a different expression of the same premise. No branch is subordinate to another. A member chooses their path based on where their strengths and ambitions lie.</p>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(158,28,28,0.2); margin-bottom: 2rem;">
-      <div style="padding: 2rem; border-left: 2px solid #4fa83a; background: var(--bg-card);">
-        <div style="font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; color: #a8e090; margin-bottom: 1rem;">Seeker Branch</div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-muted); line-height: 1.9;">The Seeker branch pursues knowledge — the investigation of power in all its forms, the study of what others refuse to touch. Where others see danger, the Seeker sees data. Every force that has ever threatened Quel'Thalas was once unknown. The Accord intends to change that.</div>
-      </div>
-      <div style="padding: 2rem; border-left: 2px solid #9e1c1c; background: var(--bg-card);">
-        <div style="font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; color: #f0a0a0; margin-bottom: 1rem;">Vanguard Branch</div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-muted); line-height: 1.9;">The Vanguard branch pursues resolve — action in the field, the defence of Quel'Thalas, the willingness to stand where others deliberate. Knowledge without application is philosophy. The Vanguard ensures the Accord's convictions have weight behind them.</div>
-      </div>
-      <div style="padding: 2rem; border-left: 2px solid #c9a84c; background: var(--bg-card);">
-        <div style="font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; color: #f0dfa0; margin-bottom: 1rem;">Cipher Branch</div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-muted); line-height: 1.9;">The Cipher branch pursues influence — contacts, diplomacy and intelligence. The ones who build the networks others rely on and navigate the spaces between. Not every battle is fought in the open. The Cipher branch ensures the Accord is never without reach.</div>
-      </div>
-    </div>
-  </div>
 
-  <div class="block reveal">
-    <p class="section-label">III. Ranks</p>
-    <h2 class="section-title">Rank Structure</h2>
-    <div class="ornament-line"><div class="ornament-dot"></div></div>
-    <div class="rank-grid">
-      <div class="rank-branch">
-        <div class="branch-header">Seeker Branch</div>
-        <div class="rank-item">
-          <div class="rank-name">Seeker</div>
-          <div class="rank-tier">Tier II — Proven</div>
-          <div class="rank-desc">Those who pursue knowledge and understanding of power in all its forms.</div>
+    <div class="rank-matrix-wrap">
+
+      <!-- CIPHER COLUMN (left) -->
+      <div class="branch-col cipher-col">
+        <div class="branch-col-header">
+          <div class="branch-col-name">Cipher Branch</div>
+          <div class="branch-col-desc">Pursues influence — contacts, diplomacy and intelligence. Not every battle is fought in the open.</div>
         </div>
-        <div class="rank-item">
-          <div class="rank-name">Scholar</div>
-          <div class="rank-tier">Tier I — Member</div>
-          <div class="rank-desc">Newly admitted members of the Seeker branch. They have proven their intent. Their depth is yet to be demonstrated.</div>
+        <div class="flip-wrap" data-branch="cipher">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Consul</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Consul</div>
+            <div class="flip-tier">Governing Triad</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Directs the Ciphers. Embodies diplomacy, connection, and the unseen architecture of the Accord.</div>
+          </div>
+        </div>
+        <div class="flip-wrap" data-branch="cipher">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Cipher</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Cipher</div>
+            <div class="flip-tier">Tier II — Proven</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Those who operate in the unseen spaces. Contacts, intelligence, the architecture others never notice.</div>
+          </div>
+        </div>
+        <div class="flip-wrap" data-branch="cipher">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Emissary</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Emissary</div>
+            <div class="flip-tier">Tier I — Member</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Newly admitted members of the Cipher branch. They have proven their awareness. Their network is yet to be built.</div>
+          </div>
         </div>
       </div>
-      <div class="rank-branch">
-        <div class="branch-header">Vanguard Branch</div>
-        <div class="rank-item">
-          <div class="rank-name">Vanguard</div>
-          <div class="rank-tier">Tier II — Proven</div>
-          <div class="rank-desc">Those who have shown resolve in the field. They act where others deliberate.</div>
+
+      <!-- SEEKER COLUMN (middle) -->
+      <div class="branch-col seeker-col">
+        <div class="branch-col-header">
+          <div class="branch-col-name">Seeker Branch</div>
+          <div class="branch-col-desc">Pursues knowledge — the investigation of power in all its forms. Where others see danger, the Seeker sees data.</div>
         </div>
-        <div class="rank-item">
-          <div class="rank-name">Sentinel</div>
-          <div class="rank-tier">Tier I — Member</div>
-          <div class="rank-desc">Newly admitted members of the Vanguard branch. They have proven their commitment. Their mettle is yet to be tested at full measure.</div>
+        <div class="flip-wrap" data-branch="seeker">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Archon</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Archon</div>
+            <div class="flip-tier">Governing Triad</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Directs the Seekers. Embodies wisdom and the mastery of power. The investigative arm of the Accord.</div>
+          </div>
+        </div>
+        <div class="flip-wrap" data-branch="seeker">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Seeker</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Seeker</div>
+            <div class="flip-tier">Tier II — Proven</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Those who pursue knowledge and understanding of power in all its forms.</div>
+          </div>
+        </div>
+        <div class="flip-wrap" data-branch="seeker">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Scholar</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Scholar</div>
+            <div class="flip-tier">Tier I — Member</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Newly admitted members of the Seeker branch. They have proven their intent. Their depth is yet to be demonstrated.</div>
+          </div>
         </div>
       </div>
-      <div class="rank-branch">
-        <div class="branch-header">Cipher Branch</div>
-        <div class="rank-item">
-          <div class="rank-name">Cipher</div>
-          <div class="rank-tier">Tier II — Proven</div>
-          <div class="rank-desc">Those who operate in the unseen spaces. Contacts, intelligence, the architecture others never notice.</div>
+
+      <!-- VANGUARD COLUMN (right) -->
+      <div class="branch-col vanguard-col">
+        <div class="branch-col-header">
+          <div class="branch-col-name">Vanguard Branch</div>
+          <div class="branch-col-desc">Pursues resolve — action in the field, the defence of Quel'Thalas. Knowledge without application is philosophy.</div>
         </div>
-        <div class="rank-item">
-          <div class="rank-name">Emissary</div>
-          <div class="rank-tier">Tier I — Member</div>
-          <div class="rank-desc">Newly admitted members of the Cipher branch. They have proven their awareness. Their network is yet to be built.</div>
+        <div class="flip-wrap" data-branch="vanguard">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Paragon</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Paragon</div>
+            <div class="flip-tier">Governing Triad</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Directs the Vanguard. Embodies willpower, resolve, and the commitment to see things through.</div>
+          </div>
+        </div>
+        <div class="flip-wrap" data-branch="vanguard">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Vanguard</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Vanguard</div>
+            <div class="flip-tier">Tier II — Proven</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Those who have shown resolve in the field. They act where others deliberate.</div>
+          </div>
+        </div>
+        <div class="flip-wrap" data-branch="vanguard">
+          <div class="flip-front">
+            <div class="flip-diamond"></div>
+            <div class="flip-rank">Sentinel</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-rank">Sentinel</div>
+            <div class="flip-tier">Tier I — Member</div>
+            <div class="flip-divider"></div>
+            <div class="flip-desc">Newly admitted members of the Vanguard branch. They have proven their commitment. Their mettle is yet to be tested at full measure.</div>
+          </div>
         </div>
       </div>
+
     </div>
+
+    <!-- Adherent -->
     <div class="adherent-bar">
-      <div>
-        <div class="rank-name">Adherent</div>
-        <div class="rank-tier">Probationary — Universal entry point</div>
-        <div class="rank-desc">The entry point. No branch, no title. A period of observation, on both sides.</div>
-      </div>
+      <div class="rank-name">Adherent</div>
+      <div class="rank-tier">Probationary — Universal entry point</div>
+      <div class="rank-desc">The entry point. No branch, no title. A period of observation, on both sides.</div>
     </div>
   </div>
 
+  <!-- INITIATION -->
   <div class="block reveal">
-    <p class="section-label">IV. Process</p>
+    <p class="section-label">II. Process</p>
     <h2 class="section-title">Initiation &amp; Advancement</h2>
     <div class="ornament-line"><div class="ornament-dot"></div></div>
     <div class="steps">
@@ -319,6 +437,19 @@
 </footer>
 
 <script>
+  // Tile hover — alle Rauten färben sich nach der aktuell gehovered Kachel
+  const matrix = document.querySelector('.rank-matrix-wrap');
+  const tiles = document.querySelectorAll('.flip-wrap[data-branch]');
+  tiles.forEach(tile => {
+    tile.addEventListener('mouseenter', () => {
+      matrix.setAttribute('data-branch', tile.dataset.branch);
+    });
+    tile.addEventListener('mouseleave', () => {
+      matrix.removeAttribute('data-branch');
+    });
+  });
+
+  
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
