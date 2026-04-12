@@ -62,19 +62,23 @@
   .triad-member { display: flex; flex-direction: column; align-items: center; }
 
   .portrait-diamond-wrap { width: 200px; height: 200px; position: relative; flex-shrink: 0; z-index: 2; margin-bottom: 4rem; }
-  .portrait-diamond { width: 100%; height: 100%; transform: rotate(45deg); overflow: hidden; border: 1px solid var(--fel-border); background: var(--bg-card); transition: border-color 0.4s, box-shadow 0.4s; }
-  .triad-member:hover .portrait-diamond { border-color: var(--fel-bright); box-shadow: 0 0 40px rgba(79,168,58,0.18); }
-  .triad-member.archon .portrait-diamond { border-color: rgba(79,168,58,0.55); box-shadow: 0 0 55px rgba(79,168,58,0.14); }
-  .triad-member.archon:hover .portrait-diamond { box-shadow: 0 0 80px rgba(79,168,58,0.25); }
+  .portrait-diamond-wrap::after { content: ''; position: absolute; inset: -30%; border-radius: 50%; background: radial-gradient(circle, rgba(79,168,58,0) 0%, rgba(79,168,58,0) 100%); transition: background 0.4s ease; pointer-events: none; z-index: -1; }
+  .triad-member:hover .portrait-diamond-wrap::after { background: radial-gradient(circle, rgba(79,168,58,0.22) 0%, rgba(79,168,58,0.08) 40%, rgba(79,168,58,0) 70%); }
+  .triad-member.archon .portrait-diamond-wrap::after { background: radial-gradient(circle, rgba(79,168,58,0.1) 0%, rgba(79,168,58,0.04) 40%, rgba(79,168,58,0) 70%); }
+  .triad-member.archon:hover .portrait-diamond-wrap::after { background: radial-gradient(circle, rgba(79,168,58,0.22) 0%, rgba(79,168,58,0.08) 40%, rgba(79,168,58,0) 70%); }
+  .portrait-diamond { width: 100%; height: 100%; transform: rotate(45deg); overflow: hidden; border: 1px solid var(--fel-border); background: var(--bg-card); transition: border-color 0.4s; }
+  .triad-member:hover .portrait-diamond { border-color: var(--fel-bright); }
+  .triad-member.archon .portrait-diamond { border-color: rgba(79,168,58,0.55); }
   .portrait-diamond-inner { position: absolute; inset: -40%; transform: rotate(-45deg); background: var(--bg-card); display: flex; align-items: center; justify-content: center; }
   .portrait-placeholder { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.15em; }
   .portrait-diamond::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(79,168,58,0.06) 0%, transparent 50%); pointer-events: none; }
 
   .member-info { text-align: center; padding: 0 0.5rem; }
   .member-title { font-size: 0.55rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--fel-bright); margin-bottom: 0.5rem; }
-  .member-name { font-family: 'Cinzel', serif; font-size: clamp(0.85rem, 1.3vw, 1rem); font-weight: 400; color: var(--text); letter-spacing: 0.07em; margin-bottom: 0.75rem; line-height: 1.5; }
+  .member-name { font-family: 'Cinzel', serif; font-size: clamp(0.85rem, 1.3vw, 1rem); font-weight: 400; color: var(--text); letter-spacing: 0.07em; margin-bottom: 0.75rem; line-height: 1.5; min-height: 3em; display: flex; flex-direction: column; align-items: center; justify-content: center; }
   .member-divider { width: 24px; height: 1px; background: var(--fel-border); margin: 0 auto 0.75rem; }
-  .member-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; font-style: italic; }
+  .member-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; font-style: italic; min-height: 5.5rem; }
+  .member-ingame { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--fel-bright); margin-top: 0.6rem; }
 
   footer { border-top: 1px solid rgba(122,26,26,0.35); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #7a6028; }
@@ -166,14 +170,15 @@
     <div class="triad-member reveal">
       <div class="portrait-diamond-wrap">
         <div class="portrait-diamond">
-          <div class="portrait-diamond-inner"><span class="portrait-placeholder">Portrait</span></div>
+          <div class="portrait-diamond-inner" style="background-image:url('aleythos_felmire.png');background-size:120%;background-repeat:no-repeat;background-position:center 15%;"></div>
         </div>
       </div>
       <div class="member-info">
         <p class="member-title">Consul</p>
-        <h2 class="member-name">[ Name Platzhalter ]</h2>
+        <h2 class="member-name">Lord Aleythos<br>Felmire</h2>
         <div class="member-divider"></div>
         <p class="member-desc">Directs the Ciphers. Embodies diplomacy, connection, and the unseen architecture of the Accord.</p>
+        <p class="member-ingame">Character: Aleythos</p>
       </div>
     </div>
 
@@ -188,6 +193,7 @@
         <h2 class="member-name">Magister Vael'tharyn<br>Wrathsworn</h2>
         <div class="member-divider"></div>
         <p class="member-desc">Directs the Seekers. Embodies wisdom and the mastery of power.</p>
+        <p class="member-ingame">Character: Vaeltharyn</p>
       </div>
     </div>
 
@@ -202,6 +208,7 @@
         <h2 class="member-name">[ Name Platzhalter ]</h2>
         <div class="member-divider"></div>
         <p class="member-desc">Directs the Vanguard. Embodies willpower, resolve, and the commitment to see things through.</p>
+        <p class="member-ingame">Character: [ Placeholder ]</p>
       </div>
     </div>
   </div>
