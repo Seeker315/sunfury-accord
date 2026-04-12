@@ -264,24 +264,85 @@
   .story-text p { margin-bottom: 1.25rem; }
   .story-pillars { display: flex; flex-direction: column; gap: 1.5rem; }
 
-  .pillar { padding: 1.5rem; border: 1px solid var(--border); background: var(--bg-card); position: relative; }
-  .pillar::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--red); }
+  .pillar { padding: 1.5rem; border: 1px solid var(--border); background: var(--bg-card); position: relative; transition: border-color 0.3s, background 0.3s, box-shadow 0.3s; }
+  .pillar::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--red); transition: background 0.3s, box-shadow 0.3s; }
   .pillar.fel-accent::before { background: var(--fel); }
   .pillar.gold-accent::before { background: var(--gold); }
-  .pillar-title { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; color: #f0a0a0; margin-bottom: 0.5rem; }
+  .pillar-title { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; color: #f0a0a0; margin-bottom: 0.5rem; transition: color 0.3s; }
   .pillar.fel-accent .pillar-title { color: var(--fel-pale); }
   .pillar.gold-accent .pillar-title { color: var(--gold-pale); }
   .pillar-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
 
+  .story-pillars:has(.pillar.red-accent:hover) .pillar { border-color: rgba(158,28,28,0.5); background: rgba(158,28,28,0.04); box-shadow: inset 0 0 40px rgba(158,28,28,0.06); }
+  .story-pillars:has(.pillar.red-accent:hover) .pillar::before { background: var(--red); box-shadow: 2px 0 12px rgba(158,28,28,0.6); }
+  .story-pillars:has(.pillar.red-accent:hover) .pillar.fel-accent::before { background: var(--red); }
+  .story-pillars:has(.pillar.red-accent:hover) .pillar.gold-accent::before { background: var(--red); }
+  .story-pillars:has(.pillar.red-accent:hover) .pillar-title { color: #f0a0a0; }
+  .story-pillars:has(.pillar.red-accent:hover) .pillar.fel-accent .pillar-title { color: #f0a0a0; }
+  .story-pillars:has(.pillar.red-accent:hover) .pillar.gold-accent .pillar-title { color: #f0a0a0; }
+
+  .story-pillars:has(.pillar.gold-accent:hover) .pillar { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.04); box-shadow: inset 0 0 40px rgba(201,168,76,0.06); }
+  .story-pillars:has(.pillar.gold-accent:hover) .pillar::before { background: var(--gold); box-shadow: 2px 0 12px rgba(201,168,76,0.6); }
+  .story-pillars:has(.pillar.gold-accent:hover) .pillar.fel-accent::before { background: var(--gold); }
+  .story-pillars:has(.pillar.gold-accent:hover) .pillar.red-accent::before { background: var(--gold); }
+  .story-pillars:has(.pillar.gold-accent:hover) .pillar-title { color: var(--gold-pale); }
+  .story-pillars:has(.pillar.gold-accent:hover) .pillar.fel-accent .pillar-title { color: var(--gold-pale); }
+
+  .story-pillars:has(.pillar.fel-accent:hover) .pillar { border-color: rgba(79,168,58,0.4); background: rgba(79,168,58,0.04); box-shadow: inset 0 0 40px rgba(79,168,58,0.06); }
+  .story-pillars:has(.pillar.fel-accent:hover) .pillar::before { background: var(--fel); box-shadow: 2px 0 12px rgba(79,168,58,0.6); }
+  .story-pillars:has(.pillar.fel-accent:hover) .pillar.red-accent::before { background: var(--fel); }
+  .story-pillars:has(.pillar.fel-accent:hover) .pillar.gold-accent::before { background: var(--fel); }
+  .story-pillars:has(.pillar.fel-accent:hover) .pillar-title { color: var(--fel-pale); }
+  .story-pillars:has(.pillar.fel-accent:hover) .pillar.red-accent .pillar-title { color: var(--fel-pale); }
+  .story-pillars:has(.pillar.fel-accent:hover) .pillar.gold-accent .pillar-title { color: var(--fel-pale); }
+
   #events { border-top: 1px solid var(--border-red); scroll-margin-top: 5rem; }
 
   .event-cycle { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-red); margin-bottom: 3rem; }
-  .event-week { background: var(--bg-card); padding: 2rem 1.5rem; position: relative; }
+  .event-week { background: var(--bg-card); padding: 2rem 1.5rem; position: relative; transition: background 0.3s, box-shadow 0.3s; }
   .event-week-number { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.75rem; }
-  .event-week-title { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 400; color: var(--gold-pale); letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .event-week-title { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 400; color: var(--gold-pale); letter-spacing: 0.08em; margin-bottom: 0.75rem; transition: color 0.3s; }
   .event-week-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.7; }
-  .event-accent { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--gold-dim); opacity: 0; transition: opacity 0.3s; }
+  .event-accent { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; opacity: 0; transition: opacity 0.3s, background 0.3s; }
   .event-week:hover .event-accent { opacity: 1; }
+
+  /* Seeker — Fel green */
+  .event-week.seeker:hover { background: #0a1a0a; box-shadow: inset 0 0 50px rgba(79,168,58,0.18); }
+  .event-week.seeker:hover .event-accent { background: var(--fel); box-shadow: 0 0 10px rgba(79,168,58,0.6); }
+  .event-week.seeker:hover .event-week-title { color: var(--fel-pale); }
+
+  /* Vanguard — Red */
+  .event-week.vanguard:hover { background: #1a0808; box-shadow: inset 0 0 50px rgba(158,28,28,0.22); }
+  .event-week.vanguard:hover .event-accent { background: var(--red-bright); box-shadow: 0 0 10px rgba(158,28,28,0.6); }
+  .event-week.vanguard:hover .event-week-title { color: #f0a0a0; }
+
+  /* Cipher — Gold */
+  .event-week.cipher:hover { background: #1a1400; box-shadow: inset 0 0 50px rgba(201,168,76,0.18); }
+  .event-week.cipher:hover .event-accent { background: var(--gold); box-shadow: 0 0 10px rgba(201,168,76,0.6); }
+  .event-week.cipher:hover .event-week-title { color: var(--gold-pale); }
+
+  /* Accord — cycling through fel → red → gold */
+  @keyframes accord-cycle {
+    0%   { background: var(--fel);        box-shadow: 0 0 12px rgba(79,168,58,0.7); }
+    33%  { background: var(--red-bright); box-shadow: 0 0 12px rgba(158,28,28,0.7); }
+    66%  { background: var(--gold);       box-shadow: 0 0 12px rgba(201,168,76,0.7); }
+    100% { background: var(--fel);        box-shadow: 0 0 12px rgba(79,168,58,0.7); }
+  }
+  @keyframes accord-title-cycle {
+    0%   { color: var(--fel-pale); }
+    33%  { color: #f0a0a0; }
+    66%  { color: var(--gold-pale); }
+    100% { color: var(--fel-pale); }
+  }
+  @keyframes accord-bg-cycle {
+    0%   { background: #0a1a0a; }
+    33%  { background: #1a0808; }
+    66%  { background: #1a1400; }
+    100% { background: #0a1a0a; }
+  }
+  .event-week.accord:hover { animation: accord-bg-cycle 3s linear infinite; }
+  .event-week.accord:hover .event-accent { opacity: 1; animation: accord-cycle 3s linear infinite; }
+  .event-week.accord:hover .event-week-title { animation: accord-title-cycle 3s linear infinite; }
 
   #gallery { border-top: 1px solid var(--border-red); max-width: 100%; padding: 0; scroll-margin-top: 5rem; }
   #gallery .inner, #artwork .inner { max-width: 1100px; margin: 0 auto; padding: 7rem 2rem 3rem; }
@@ -451,7 +512,6 @@
         <p>We are not united by faith or by grief. Quel'Thalas has bled for its dependencies. The Accord exists to end them.</p>
         <p>Those who join and preach submission to any cosmic force have fundamentally misunderstood what they signed up for. We dissect these forces. We do not kneel to them.</p>
         <p>Three branches. One premise. The Seekers investigate what others will not touch. The Vanguard holds what others cannot defend. The Ciphers build what others cannot see. Each answers to no force greater than their own will and to the Accord.</p>
-        <p style="margin-top:2rem;"><a href="ranks.html" class="btn-ghost" style="white-space:nowrap;">The Codex</a></p>
       </div>
       <div class="story-pillars">
         <div class="pillar red-accent">
@@ -468,6 +528,9 @@
         </div>
       </div>
     </div>
+    <div style="text-align:center; margin-top:3rem;">
+      <a href="ranks.html" class="btn-ghost" style="white-space:nowrap;">The Codex</a>
+    </div>
   </section>
 </div>
 
@@ -477,25 +540,25 @@
     <h2 class="section-title">The Monthly Cycle</h2>
     <div class="ornament-line"><div class="ornament-dot"></div></div>
     <div class="event-cycle">
-      <div class="event-week">
+      <div class="event-week seeker">
         <div class="event-week-number">Week One</div>
         <div class="event-week-title">Seeker Focus</div>
         <div class="event-week-desc">Magical investigation, arcane theory, anomaly and research. The Seekers lead.</div>
         <div class="event-accent"></div>
       </div>
-      <div class="event-week">
+      <div class="event-week vanguard">
         <div class="event-week-number">Week Two</div>
         <div class="event-week-title">Vanguard Focus</div>
         <div class="event-week-desc">Field mission, active threat, confrontation, defence of Quel'Thalas.</div>
         <div class="event-accent"></div>
       </div>
-      <div class="event-week">
+      <div class="event-week cipher">
         <div class="event-week-number">Week Three</div>
         <div class="event-week-title">Cipher Focus</div>
         <div class="event-week-desc">Intelligence, contacts, intrigue, covert operation. The unseen architecture.</div>
         <div class="event-accent"></div>
       </div>
-      <div class="event-week">
+      <div class="event-week accord">
         <div class="event-week-number">Week Four</div>
         <div class="event-week-title">Accord Focus</div>
         <div class="event-week-desc">All three branches converge. Council, major decisions, shared experience.</div>
@@ -511,7 +574,7 @@
 
 <div id="recruitment">
   <section class="reveal">
-    <p class="section-label">VI. Recruitment</p>
+    <p class="section-label">IV. Recruitment</p>
     <h2 class="section-title">Join the Accord</h2>
     <div class="ornament-line"><div class="ornament-dot"></div></div>
 
@@ -549,7 +612,7 @@
 
 <div id="contact">
   <section class="reveal" style="margin: 0 auto; text-align: center;">
-    <p class="section-label">VII. Contact</p>
+    <p class="section-label">V. Contact</p>
     <h2 class="section-title">Reach the Accord</h2>
     <div class="ornament-line" style="justify-content: center;"><div class="ornament-dot"></div></div>
     <p class="contact-text">
@@ -656,20 +719,78 @@
   resizeFlame();
   window.addEventListener('resize', resizeFlame);
 
+  // Global spark color state
+  let targetHue = 30;
+  let currentHue = 30;
+
+  // Button hover listeners
+  document.querySelectorAll('.btn-primary').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 355; burstSparks(25); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+  document.querySelectorAll('.btn-ghost, .btn-discord').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 120; burstSparks(25); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+
+  document.querySelectorAll('.event-week.seeker').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 120; burstSparks(15); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+  document.querySelectorAll('.event-week.vanguard').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 355; burstSparks(15); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+  document.querySelectorAll('.event-week.cipher').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 42; burstSparks(15); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+  document.querySelectorAll('.event-week.accord').forEach(el => {
+    let accordInterval = null;
+    el.addEventListener('mouseenter', () => {
+      burstSparks(15);
+      let step = 0;
+      const hues = [120, 355, 42];
+      targetHue = hues[0];
+      accordInterval = setInterval(() => {
+        step = (step + 1) % 3;
+        targetHue = hues[step];
+        burstSparks(8);
+      }, 1000);
+    });
+    el.addEventListener('mouseleave', () => {
+      clearInterval(accordInterval);
+      targetHue = 30;
+    });
+  });
+
+  document.querySelectorAll('.pillar.red-accent').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 355; burstSparks(20); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+  document.querySelectorAll('.pillar.gold-accent').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 42; burstSparks(20); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+  document.querySelectorAll('.pillar.fel-accent').forEach(el => {
+    el.addEventListener('mouseenter', () => { targetHue = 120; burstSparks(20); });
+    el.addEventListener('mouseleave', () => { targetHue = 30; });
+  });
+
   class Spark {
     constructor() { this.reset(true); }
     reset(initial) {
       const w = flameCanvas.width;
       const h = flameCanvas.height;
-      this.x     = Math.random() * w;
-      this.y     = initial ? h - Math.random() * h : h + 4;
-      this.size  = 0.5 + Math.random() * 1.2;
+      this.x      = Math.random() * w;
+      this.y      = initial ? h - Math.random() * h : h + 4;
+      this.size   = 0.5 + Math.random() * 1.2;
       this.speedY = -(0.6 + Math.random() * 1.8);
       this.speedX = (Math.random() - 0.5) * 0.4;
       this.drift  = (Math.random() - 0.5) * 0.015;
       this.life   = 0;
       this.maxLife = 60 + Math.random() * 140;
-      this.hue    = 20 + Math.random() * 30; // red to gold
+      this.hue    = currentHue + (Math.random() - 0.5) * 15;
     }
     update() {
       this.speedX += this.drift;
@@ -680,21 +801,17 @@
     }
     draw(ctx) {
       const progress = this.life / this.maxLife;
-      const alpha = progress < 0.1
-        ? progress / 0.1
-        : 1 - progress;
+      const alpha = progress < 0.1 ? progress / 0.1 : 1 - progress;
       const opacity = alpha * 0.75;
 
-      // Hard core point
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${this.hue + 30}, 100%, 88%, ${opacity})`;
+      ctx.fillStyle = `hsla(${this.hue + 10}, 100%, 60%, ${opacity})`;
       ctx.fill();
 
-      // Tiny glow — kept small so it reads as spark not blob
       const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3.5);
-      grad.addColorStop(0, `hsla(${this.hue}, 100%, 65%, ${opacity * 0.4})`);
-      grad.addColorStop(1, `hsla(${this.hue}, 100%, 40%, 0)`);
+      grad.addColorStop(0, `hsla(${this.hue}, 100%, 50%, ${opacity * 0.5})`);
+      grad.addColorStop(1, `hsla(${this.hue}, 100%, 30%, 0)`);
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size * 3.5, 0, Math.PI * 2);
       ctx.fillStyle = grad;
@@ -704,7 +821,20 @@
 
   const sparks = Array.from({ length: 90 }, () => new Spark());
 
+  function burstSparks(count) {
+    let burst = 0;
+    for (let i = 0; i < sparks.length && burst < count; i++) {
+      if (sparks[i].life > sparks[i].maxLife * 0.6) {
+        sparks[i].reset(false);
+        burst++;
+      }
+    }
+  }
+
   function drawFlame() {
+    // Smoothly lerp currentHue toward targetHue
+    currentHue += (targetHue - currentHue) * 0.12;
+
     fc.clearRect(0, 0, flameCanvas.width, flameCanvas.height);
     sparks.forEach(s => { s.update(); s.draw(fc); });
     requestAnimationFrame(drawFlame);
