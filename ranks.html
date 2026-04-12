@@ -110,7 +110,7 @@
   /* Branch column layout */
   .rank-matrix-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
   .branch-col { display: flex; flex-direction: column; }
-  .branch-col-header { background: #0e0606; padding: 1.75rem 1.5rem; border-top: 2px solid rgba(158,28,28,0.4); transition: border-color 0.3s, background 0.3s; text-align: center; }
+  .branch-col-header { background: #0e0606; padding: 1.75rem 1.5rem; border-top: 2px solid rgba(158,28,28,0.4); transition: border-color 0.3s, background 0.3s; text-align: center; min-height: 9rem; display: flex; flex-direction: column; justify-content: flex-start; }
   .branch-col-name { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-pale); margin-bottom: 0.75rem; transition: color 0.3s; }
   .branch-col-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--text-dim); line-height: 1.8; transition: color 0.3s; }
 
@@ -224,7 +224,7 @@
       <div class="branch-col cipher-col">
         <div class="branch-col-header">
           <div class="branch-col-name">Cipher Branch</div>
-          <div class="branch-col-desc">Pursues influence — contacts, diplomacy and intelligence. Not every battle is fought in the open.</div>
+          <div class="branch-col-desc">Pursues influence — contacts, intelligence, diplomacy. Not every battle is fought in the open.</div>
         </div>
         <div class="flip-wrap" data-branch="cipher">
           <div class="flip-front">
