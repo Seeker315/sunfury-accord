@@ -27,11 +27,10 @@
   .page-header, .triad-section, footer { position: relative; z-index: 1; }
 
   .page-header {
-    padding: 14rem 2rem 16rem;
+    padding: 14rem 2rem 8rem;
     text-align: center;
     position: relative;
     overflow: hidden;
-    margin-bottom: -8rem;
   }
   .page-header-bg {
     position: absolute; inset: 0;
@@ -44,14 +43,15 @@
     content: '';
     position: absolute; inset: 0;
     background:
-      linear-gradient(to bottom, rgba(9,8,10,0.3) 0%, rgba(9,8,10,0) 20%, rgba(9,8,10,0) 45%, rgba(9,8,10,1) 100%);
+      linear-gradient(to bottom, rgba(9,8,10,0.3) 0%, rgba(9,8,10,0) 20%, rgba(9,8,10,0) 60%, rgba(9,8,10,1) 100%),
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(79,168,58,0.04) 0%, transparent 70%);
   }
   .page-header-content { position: relative; z-index: 1; }
   .section-label { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase; color: var(--fel); margin-bottom: 0.75rem; }
   .page-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; color: var(--fel-pale); letter-spacing: 0.15em; margin-bottom: 1rem; }
   .page-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
 
-  .triad-section { padding: 8rem 2rem 10rem; max-width: 1100px; margin: 0 auto; }
+  .triad-section { padding: 5rem 2rem 10rem; max-width: 1100px; margin: 0 auto; }
   .triad-intro { text-align: center; max-width: 620px; margin: 0 auto 7rem; }
   .triad-intro p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-muted); line-height: 2; }
   .ornament-line { display: flex; align-items: center; gap: 1rem; margin-bottom: 5rem; justify-content: center; }
@@ -153,11 +153,14 @@
   </div>
 </div>
 
-<div class="triad-section">
-  <div class="triad-intro reveal">
-    <p>The Accord is governed by a Triad of three equal members, each directing one branch. Authority belongs to the individual, not the title. In the event of a deadlock, the founding member holds a tiebreaking function by personal designation.</p>
+<div style="border-top: 1px solid var(--fel-border); border-bottom: 1px solid var(--fel-border); background: var(--bg-card); padding: 4rem 2rem;">
+  <div style="max-width: 620px; margin: 0 auto; text-align: center;">
+    <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-muted); line-height: 2;">The Accord is governed by a Triad of three equal members, each directing one branch. Authority belongs to the individual, not the title.</p>
+    <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-muted); line-height: 2; margin-top: 1.25rem;">In the event of a deadlock, the founding member holds a tiebreaking function by personal designation. This authority belongs to the individual, not the title.</p>
   </div>
-  <div class="ornament-line reveal"><div class="ornament-dot"></div></div>
+</div>
+
+<div class="triad-section">
 
   <div class="triad-columns">
     <div class="triad-member reveal">
