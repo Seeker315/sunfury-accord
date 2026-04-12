@@ -197,6 +197,17 @@
     opacity: 0; transition: opacity 0.15s;
     text-align: left; z-index: 500;
   }
+  .map-marker.below .map-tooltip {
+    bottom: auto;
+    top: calc(100% + 12px);
+  }
+  .map-marker.below .map-tooltip::after {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: rgba(201,168,76,0.35);
+  }
+  .map-marker.below.red .map-tooltip::after { border-bottom-color: rgba(160,32,32,0.5); }
   .map-marker:hover .map-tooltip { opacity: 1; pointer-events: all; }
   .map-tooltip.pinned { opacity: 1; pointer-events: all; }
   .map-tooltip::after {
@@ -392,7 +403,7 @@
       </div>
 
       <!-- QUEL'DANAS — The Archives -->
-      <div class="map-marker" style="left:28%;top:13%;">
+      <div class="map-marker below" style="left:28%;top:13%;">
         <div class="map-tooltip">
           <p class="map-tooltip-label">Isle of Quel'Danas</p>
           <h3 class="map-tooltip-title">The Archives</h3>
@@ -403,9 +414,6 @@
         <div class="map-marker-dot"></div>
       </div>
 
-    </div>
-    <div class="map-footer">
-      <a href="map.html">View full map →</a>
     </div>
   </div>
 </div>
@@ -443,7 +451,7 @@
         <p>We are not united by faith or by grief. Quel'Thalas has bled for its dependencies. The Accord exists to end them.</p>
         <p>Those who join and preach submission to any cosmic force have fundamentally misunderstood what they signed up for. We dissect these forces. We do not kneel to them.</p>
         <p>Three branches. One premise. The Seekers investigate what others will not touch. The Vanguard holds what others cannot defend. The Ciphers build what others cannot see. Each answers to no force greater than their own will and to the Accord.</p>
-        <p style="margin-top:2rem;"><a href="ranks.html" class="btn-ghost">Learn more about the Guild Structure</a></p>
+        <p style="margin-top:2rem;"><a href="ranks.html" class="btn-ghost" style="white-space:nowrap;">The Codex</a></p>
       </div>
       <div class="story-pillars">
         <div class="pillar red-accent">
@@ -506,32 +514,34 @@
     <p class="section-label">VI. Recruitment</p>
     <h2 class="section-title">Join the Accord</h2>
     <div class="ornament-line"><div class="ornament-dot"></div></div>
-    <div class="recruitment-grid">
-      <div class="recruitment-text">
-        <p>The Accord does not recruit in open calls. Applicants introduce themselves. A brief conversation follows. We decide whether to extend an invitation as Adherent.</p>
-        <p>Full membership requires a Trial, chosen by the applicant themselves, as long as it connects to the Accord's premise. A theory. A thesis. A network concept. The standard is intention, not quality.</p>
-        <p>The presentation is public. It is the first social anchor of membership. What you contribute to the Accord is what defines your place in it.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+      <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--text-muted); line-height: 1.9;">
+        <p>We are a new English-speaking guild on Argent Dawn EU. We enjoy a good story in a positive environment, and we are looking for people who feel the same.</p>
+        <p style="margin-top: 1rem;">Lore knowledge is not a barrier to joining, but curiosity and a willingness to engage with the setting matter to us. If you want to learn, you will fit right in.</p>
+        <p style="margin-top: 1.25rem; color: var(--gold); font-size: 1.05rem;">Want engaging RP and a community worth building something with? Join us and write your story within the Accord.</p>
       </div>
-      <div class="recruitment-conditions">
-        <div class="condition">
-          <div class="condition-icon"></div>
-          <div class="condition-text">Sin'dorei and Shal'dorei are the natural core. Other races are welcome if they can genuinely operate within the Accord's premise.</div>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+          <div style="width: 4px; height: 4px; background: var(--fel); transform: rotate(45deg); flex-shrink: 0; margin-top: 0.55rem;"></div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.7;">Regular weekly events with a rotating focus. Every member has a role regardless of branch.</span>
         </div>
-        <div class="condition">
-          <div class="condition-icon"></div>
-          <div class="condition-text">Submission to any cosmic force — Light, Void, Fel or Arcane — as a matter of faith rather than mastery is incompatible with membership.</div>
+        <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+          <div style="width: 4px; height: 4px; background: var(--fel); transform: rotate(45deg); flex-shrink: 0; margin-top: 0.55rem;"></div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.7;">English-speaking. IC and OOC are kept clearly separate.</span>
         </div>
-        <div class="condition">
-          <div class="condition-icon"></div>
-          <div class="condition-text">Advancement is self-initiated. Those who wish to progress approach the Triad. There is no automatic promotion.</div>
+        <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+          <div style="width: 4px; height: 4px; background: var(--fel); transform: rotate(45deg); flex-shrink: 0; margin-top: 0.55rem;"></div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.7;">We value a good OOC environment as much as good RP. Respectful, straightforward, no unnecessary friction.</span>
         </div>
-        <div class="condition fel-marker">
-          <div class="condition-icon"></div>
-          <div class="condition-text">No force is forbidden from study. What matters is who holds the leash.</div>
+        <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 0.75rem 0;">
+          <div style="width: 4px; height: 4px; background: var(--fel); transform: rotate(45deg); flex-shrink: 0; margin-top: 0.55rem;"></div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.7;">We are building something together. What you bring to the Accord shapes what it becomes.</span>
         </div>
       </div>
     </div>
-    <div style="margin-top: 4rem; text-align: center;">
+
+    <div style="margin-top: 3rem; text-align: center;">
       <a href="#contact" class="btn-primary">Contact the Triad</a>
     </div>
   </section>
@@ -631,6 +641,75 @@
     tooltip.addEventListener('mouseenter', showTooltip);
     tooltip.addEventListener('mouseleave', hideTooltip);
   });
+
+  // Spark canvas — rising from bottom edge
+  const flameCanvas = document.createElement('canvas');
+  flameCanvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+  document.body.appendChild(flameCanvas);
+
+  const fc = flameCanvas.getContext('2d');
+
+  function resizeFlame() {
+    flameCanvas.width  = window.innerWidth;
+    flameCanvas.height = window.innerHeight;
+  }
+  resizeFlame();
+  window.addEventListener('resize', resizeFlame);
+
+  class Spark {
+    constructor() { this.reset(true); }
+    reset(initial) {
+      const w = flameCanvas.width;
+      const h = flameCanvas.height;
+      this.x     = Math.random() * w;
+      this.y     = initial ? h - Math.random() * h : h + 4;
+      this.size  = 0.5 + Math.random() * 1.2;
+      this.speedY = -(0.6 + Math.random() * 1.8);
+      this.speedX = (Math.random() - 0.5) * 0.4;
+      this.drift  = (Math.random() - 0.5) * 0.015;
+      this.life   = 0;
+      this.maxLife = 60 + Math.random() * 140;
+      this.hue    = 20 + Math.random() * 30; // red to gold
+    }
+    update() {
+      this.speedX += this.drift;
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.life++;
+      if (this.life > this.maxLife || this.y < -10) this.reset(false);
+    }
+    draw(ctx) {
+      const progress = this.life / this.maxLife;
+      const alpha = progress < 0.1
+        ? progress / 0.1
+        : 1 - progress;
+      const opacity = alpha * 0.75;
+
+      // Hard core point
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${this.hue + 30}, 100%, 88%, ${opacity})`;
+      ctx.fill();
+
+      // Tiny glow — kept small so it reads as spark not blob
+      const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3.5);
+      grad.addColorStop(0, `hsla(${this.hue}, 100%, 65%, ${opacity * 0.4})`);
+      grad.addColorStop(1, `hsla(${this.hue}, 100%, 40%, 0)`);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+  }
+
+  const sparks = Array.from({ length: 90 }, () => new Spark());
+
+  function drawFlame() {
+    fc.clearRect(0, 0, flameCanvas.width, flameCanvas.height);
+    sparks.forEach(s => { s.update(); s.draw(fc); });
+    requestAnimationFrame(drawFlame);
+  }
+  requestAnimationFrame(drawFlame);
 </script>
 </body>
 </html>
