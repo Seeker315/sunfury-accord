@@ -361,11 +361,11 @@
       const opacity = alpha * 0.75;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${this.hue + 30}, 100%, 88%, ${opacity})`;
+      ctx.fillStyle = `hsla(${this.hue}, 90%, 45%, ${opacity})`;
       ctx.fill();
       const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3.5);
-      grad.addColorStop(0, `hsla(${this.hue}, 100%, 65%, ${opacity * 0.4})`);
-      grad.addColorStop(1, `hsla(${this.hue}, 100%, 40%, 0)`);
+      grad.addColorStop(0, `hsla(${this.hue}, 90%, 35%, ${opacity * 0.5})`);
+      grad.addColorStop(1, `hsla(${this.hue}, 80%, 20%, 0)`);
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size * 3.5, 0, Math.PI * 2);
       ctx.fillStyle = grad;
