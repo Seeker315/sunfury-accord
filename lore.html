@@ -294,7 +294,33 @@
   document.querySelectorAll('.archive-marker').forEach(marker => {
     const tooltip = marker.querySelector('.archive-tooltip');
     let leaveTimer = null;
-    function show() { clearTimeout(leaveTimer); tooltip.classList.add('pinned'); }
+
+    function reposition() {
+      // Reset first
+      tooltip.style.left = '';
+      tooltip.style.right = '';
+      tooltip.style.transform = 'translateX(-50%)';
+
+      const rect = tooltip.getBoundingClientRect();
+      const margin = 12;
+
+      if (rect.left < margin) {
+        // Too close to left edge — anchor to left of marker
+        tooltip.style.left = '0';
+        tooltip.style.transform = 'translateX(0)';
+      } else if (rect.right > window.innerWidth - margin) {
+        // Too close to right edge — anchor to right of marker
+        tooltip.style.left = 'auto';
+        tooltip.style.right = '0';
+        tooltip.style.transform = 'translateX(0)';
+      }
+    }
+
+    function show() {
+      clearTimeout(leaveTimer);
+      tooltip.classList.add('pinned');
+      reposition();
+    }
     function hide() { leaveTimer = setTimeout(() => tooltip.classList.remove('pinned'), 80); }
     marker.addEventListener('mouseenter', show);
     marker.addEventListener('mouseleave', hide);
