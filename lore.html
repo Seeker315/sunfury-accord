@@ -46,6 +46,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
+    min-height: 500px;
   }
 
   .archives-hero-img {
@@ -201,6 +202,7 @@
 
 <div class="archives-hero">
   <img class="archives-hero-img" src="archives_bg.png" alt="The Archives">
+  <canvas id="starCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;"></canvas>
 
   <!--
     MARKERS over bookshelves.
@@ -300,7 +302,57 @@
     tooltip.addEventListener('mouseleave', hide);
   });
 
-  // Spotlight
+  // Star canvas
+  const canvas = document.getElementById('starCanvas');
+  const hero   = canvas.parentElement;
+
+  function resizeCanvas() {
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const ctx = canvas.getContext('2d');
+
+  const stars = Array.from({ length: 55 }, () => ({
+    x:     Math.random(),
+    y:     Math.random() * 0.25,
+    r:     0.4 + Math.random() * 1.2,
+    base:  0.1 + Math.random() * 0.4,
+    amp:   0.06 + Math.random() * 0.25,
+    speed: 0.0004 + Math.random() * 0.001,
+    phase: Math.random() * Math.PI * 2,
+    hue:   38 + Math.floor(Math.random() * 18),
+  }));
+
+  function draw(ts) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const w = canvas.width;
+    const h = canvas.height;
+
+    stars.forEach(s => {
+      const opacity = s.base + Math.sin(ts * s.speed + s.phase) * s.amp;
+      const x = s.x * w;
+      const y = s.y * h;
+
+      const glow = ctx.createRadialGradient(x, y, 0, x, y, s.r * 5);
+      glow.addColorStop(0, `hsla(${s.hue}, 70%, 82%, ${opacity * 0.4})`);
+      glow.addColorStop(1, `hsla(${s.hue}, 60%, 70%, 0)`);
+      ctx.beginPath();
+      ctx.arc(x, y, s.r * 5, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(x, y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${s.hue}, 80%, 92%, ${Math.min(opacity * 1.8, 0.95)})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(ts => draw(ts));
   const spotlight = document.getElementById('spotlight');
   let isHoveringInteractive = false;
   document.addEventListener('mousemove', e => {
