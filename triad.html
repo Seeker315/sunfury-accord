@@ -180,7 +180,7 @@
     <div class="triad-member archon reveal reveal-delay-1">
       <div class="portrait-diamond-wrap">
         <div class="portrait-diamond">
-          <div class="portrait-diamond-inner" style="background-image:url('portrait_archon.png');background-size:cover;background-position:center 30%;"></div>
+          <div class="portrait-diamond-inner" style="background-image:url('portrait_archon.png');background-size:115%;background-repeat:no-repeat;background-position:center 25%;"></div>
         </div>
       </div>
       <div class="member-info">
@@ -238,6 +238,61 @@
     el.addEventListener('mouseenter', () => { isHoveringInteractive = true; });
     el.addEventListener('mouseleave', () => { isHoveringInteractive = false; });
   });
+
+  // Sparks — fel green
+  const flameCanvas = document.createElement('canvas');
+  flameCanvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+  document.body.appendChild(flameCanvas);
+  const fc = flameCanvas.getContext('2d');
+  function resizeFlame() { flameCanvas.width = window.innerWidth; flameCanvas.height = window.innerHeight; }
+  resizeFlame();
+  window.addEventListener('resize', resizeFlame);
+
+  class Spark {
+    constructor() { this.reset(true); }
+    reset(initial) {
+      const w = flameCanvas.width, h = flameCanvas.height;
+      this.x      = Math.random() * w;
+      this.y      = initial ? h - Math.random() * h : h + 4;
+      this.size   = 0.5 + Math.random() * 1.2;
+      this.speedY = -(0.6 + Math.random() * 1.8);
+      this.speedX = (Math.random() - 0.5) * 0.4;
+      this.drift  = (Math.random() - 0.5) * 0.015;
+      this.life   = 0;
+      this.maxLife = 60 + Math.random() * 140;
+    }
+    update() {
+      this.speedX += this.drift;
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.life++;
+      if (this.life > this.maxLife || this.y < -10) this.reset(false);
+    }
+    draw(ctx) {
+      const progress = this.life / this.maxLife;
+      const alpha = progress < 0.1 ? progress / 0.1 : 1 - progress;
+      const opacity = alpha * 0.75;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(120, 80%, 70%, ${opacity})`;
+      ctx.fill();
+      const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3.5);
+      grad.addColorStop(0, `hsla(100, 90%, 55%, ${opacity * 0.4})`);
+      grad.addColorStop(1, `hsla(120, 80%, 40%, 0)`);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+  }
+
+  const sparks = Array.from({ length: 90 }, () => new Spark());
+  function drawFlame() {
+    fc.clearRect(0, 0, flameCanvas.width, flameCanvas.height);
+    sparks.forEach(s => { s.update(); s.draw(fc); });
+    requestAnimationFrame(drawFlame);
+  }
+  requestAnimationFrame(drawFlame);
 </script>
 </body>
 </html>
