@@ -338,12 +338,12 @@
   .overlay-section:first-of-type { margin-top: 0; }
   .overlay-note {
     font-family: 'Cormorant Garamond', serif; font-style: italic;
-    font-size: 1.1rem; color: #b0a080; line-height: 1.85;
+    font-size: 1rem; color: #a09070; line-height: 1.85;
     margin-bottom: 1.25rem;
   }
   .overlay-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; line-height: 2; color: #e8dfc8;
+    font-size: 1.05rem; line-height: 2; color: #d8cca8;
     margin-bottom: 1.25rem;
   }
   .overlay-colophon {
@@ -581,7 +581,7 @@
     const content = papers[id];
     if (!content) return;
     document.getElementById('paperContent').innerHTML =
-      `<button id="paperClose" style="position:fixed;top:2rem;right:2.5rem;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-dim);background:none;border:none;cursor:pointer;font-family:'Raleway',sans-serif;transition:color 0.2s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--text-dim)'" onclick="closePaper()">Close ✕</button>` + content;
+      `<button id="paperClose" style="position:fixed;top:2rem;right:2.5rem;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);background:none;border:none;cursor:pointer;font-family:'Raleway',sans-serif;transition:color 0.2s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--text-muted)'" onclick="closePaper()">Close ✕</button>` + content;
     const overlay = document.getElementById('paperOverlay');
     overlay.style.opacity = '1';
     overlay.style.pointerEvents = 'all';
