@@ -247,11 +247,11 @@
   <!-- RIGHT-CENTER SHELF -->
   <div class="archive-marker" style="left:67%;top:52%;">
     <div class="archive-tooltip">
-      <p class="archive-tooltip-label">Sunfury Report · III</p>
-      <h3 class="archive-tooltip-title">Anor'vel sha'thal dorei</h3>
+      <p class="archive-tooltip-label">Category</p>
+      <h3 class="archive-tooltip-title">Academic Works</h3>
       <div class="archive-tooltip-divider"></div>
-      <p class="archive-tooltip-text">Vel'shan mana dorei thal'anor. Sin'ethrel quel'sha vel norah'dorei mala thas. Anor sha'vel thal dorei vel'sin mana'aran.</p>
-      <a href="#" class="archive-tooltip-btn">Read →</a>
+      <p class="archive-tooltip-text">Papers, theses, and restricted field theory submitted to the Accord's record.</p>
+      <a href="library.html" class="archive-tooltip-btn">Enter →</a>
     </div>
     <div class="archive-marker-dot"></div>
   </div>
@@ -275,6 +275,29 @@
   <p class="section-label">The Sunfury Accord</p>
   <h2 class="section-title">Public Record</h2>
   <p class="archives-intro">The findings of the Sunfury Accord are committed to record and dispatched to Magisters' Terrace on a regular basis. Those reports deemed suitable for wider circulation are housed within the Archives, open to those of Quel'Thalas who seek knowledge over comfort.</p>
+</div>
+
+<!-- ACADEMIC WORKS BLOCK -->
+<div style="max-width:900px;margin:4rem auto;padding:0 2rem 6rem;">
+  <div class="academic-block" style="border:1px solid rgba(122,26,26,0.35);padding:2.5rem 2.5rem 2rem;transition:border-color 0.3s,box-shadow 0.3s;cursor:pointer;" onclick="window.location='library.html'">
+
+    <!-- Block header -->
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(122,26,26,0.2);">
+      <h3 class="academic-title" style="font-family:'Cinzel',serif;font-size:1rem;font-weight:400;color:var(--gold);letter-spacing:0.12em;transition:color 0.3s;">Academic Works</h3>
+      <span class="academic-link" style="font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-dim);transition:color 0.3s;">Full Library &#x2192;</span>
+    </div>
+
+    <!-- Paper entry -->
+    <div style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem 2rem;padding:1.25rem 0;border-bottom:1px solid rgba(90,82,72,0.15);">
+      <div>
+        <span style="display:block;font-size:0.45rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(122,26,26,0.6);margin-bottom:0.3rem;">Restricted Circulation</span>
+        <span style="display:block;font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);letter-spacing:0.03em;margin-bottom:0.25rem;">Spellform as Chassis: Delivering Volatile Payloads Through Stable Geometry</span>
+        <span style="display:block;font-size:0.55rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);">Magister Vael'tharyn Wrathsworn</span>
+      </div>
+      <span class="academic-btn" style="font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);padding:0.45rem 0.9rem;white-space:nowrap;transition:color 0.3s,border-color 0.3s;">Read &#x2192;</span>
+    </div>
+
+  </div>
 </div>
 
 <footer>
@@ -422,6 +445,27 @@
     el.addEventListener('mouseenter', () => { isHoveringInteractive = true; });
     el.addEventListener('mouseleave', () => { isHoveringInteractive = false; });
   });
+
+  // Academic Works block hover
+  const academicBlock = document.querySelector('.academic-block');
+  if (academicBlock) {
+    academicBlock.addEventListener('mouseenter', () => {
+      academicBlock.style.borderColor = 'rgba(79,168,58,0.55)';
+      academicBlock.style.boxShadow = '0 0 28px rgba(79,168,58,0.08), inset 0 0 40px rgba(79,168,58,0.03)';
+      academicBlock.querySelector('.academic-title').style.color = 'var(--fel-bright)';
+      academicBlock.querySelector('.academic-link').style.color = 'var(--fel-bright)';
+      academicBlock.querySelector('.academic-btn').style.color = 'var(--fel-bright)';
+      academicBlock.querySelector('.academic-btn').style.borderColor = 'rgba(79,168,58,0.5)';
+    });
+    academicBlock.addEventListener('mouseleave', () => {
+      academicBlock.style.borderColor = 'rgba(122,26,26,0.35)';
+      academicBlock.style.boxShadow = 'none';
+      academicBlock.querySelector('.academic-title').style.color = 'var(--gold)';
+      academicBlock.querySelector('.academic-link').style.color = 'var(--gold-dim)';
+      academicBlock.querySelector('.academic-btn').style.color = 'var(--gold-dim)';
+      academicBlock.querySelector('.academic-btn').style.borderColor = 'rgba(201,168,76,0.2)';
+    });
+  }
 </script>
 </body>
 </html>

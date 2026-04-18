@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Library · The Sunfury Accord</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #c9a84c; --gold-pale: #f0dfa0; --gold-dim: #7a6028;
+    --fel: #4fa83a; --fel-bright: #6dcc55; --fel-pale: #a8e090;
+    --fel-border: rgba(79,168,58,0.35);
+    --red: #7a1a1a; --border-red: rgba(122,26,26,0.35);
+    --bg: #09080a; --text: #e8dfc8; --text-muted: #9a9080; --text-dim: #5a5248;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Raleway', sans-serif; font-weight: 300; line-height: 1.8; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(9,8,10,0.97) 0%, transparent 100%); }
+  .nav-logo { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding: 10rem 2rem 5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-red);
+    position: relative;
+  }
+  .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 50% 40%, rgba(122,26,26,0.08) 0%, transparent 70%); pointer-events: none; }
+  .section-label { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+  .page-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; color: var(--gold-pale); letter-spacing: 0.15em; margin-bottom: 0.75rem; }
+  .page-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--text-muted); }
+
+  /* LIBRARY BODY */
+  .library-body { max-width: 900px; margin: 0 auto; padding: 6rem 2rem 10rem; }
+
+  /* CATEGORY */
+  .category-block { margin-bottom: 5rem; background: rgba(255,255,255,0.018); border: 1px solid rgba(122,26,26,0.25); padding: 2.5rem; }
+  .category-label {
+    font-size: 0.55rem; font-weight: 400; letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 0.5rem;
+  }
+  .category-title {
+    font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 400;
+    color: var(--gold); letter-spacing: 0.1em; margin-bottom: 2rem;
+    padding-bottom: 1rem; border-bottom: 1px solid var(--border-red);
+  }
+
+  /* PAPER ROW */
+  .paper-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 1rem 2rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid rgba(90,82,72,0.2);
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .paper-row::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem; right: -1.5rem; top: 0; bottom: 0;
+    background: transparent;
+    transition: background 0.2s;
+  }
+  .paper-row:hover::before { background: rgba(201,168,76,0.025); }
+  .paper-row:hover .paper-title { color: var(--gold-pale); }
+  .paper-row:hover .paper-read { color: var(--fel-bright); border-color: rgba(79,168,58,0.5); }
+
+  .paper-meta { display: flex; flex-direction: column; gap: 0.35rem; position: relative; }
+  .paper-classification {
+    font-size: 0.5rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 400;
+  }
+  .paper-classification.restricted { color: #c06060; }
+  .paper-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400;
+    color: var(--text); letter-spacing: 0.04em;
+    line-height: 1.35;
+    transition: color 0.2s;
+  }
+  .paper-author {
+    font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-muted); margin-top: 0.1rem;
+  }
+  .paper-desc {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
+    margin-top: 0.4rem; max-width: 580px;
+  }
+
+  .paper-read {
+    font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.5rem 1rem; white-space: nowrap; align-self: center;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border-red); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--gold-dim); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-text { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-dim); }
+
+  /* SPOTLIGHT */
+  #spotlight { position: fixed; pointer-events: none; z-index: 9999; width: 400px; height: 400px; border-radius: 50%; transform: translate(-50%, -50%); transition: background 0.4s ease; top: -9999px; left: -9999px; }
+
+  /* ============================================================
+     BOOK OVERLAY
+  ============================================================ */
+  .book-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(5,4,6,0.94);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .book-overlay.open { opacity: 1; pointer-events: all; }
+
+  .book-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  /* Close button */
+  .book-close {
+    position: absolute;
+    top: -3rem; right: 0;
+    font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--text-dim); background: none; border: none;
+    cursor: pointer; font-family: 'Raleway', sans-serif;
+    transition: color 0.2s;
+    padding: 0.5rem 0;
+  }
+  .book-close:hover { color: var(--gold); }
+
+  /* The book itself */
+  .book {
+    display: flex;
+    gap: 0;
+    position: relative;
+    animation: tomeAppear 0.5s ease forwards;
+  }
+
+  @keyframes tomeAppear {
+    from { opacity: 0; transform: scale(0.97); box-shadow: 0 0 0 rgba(201,168,76,0); }
+    to   { opacity: 1; transform: scale(1);    box-shadow: 0 0 60px rgba(201,168,76,0.12), 0 30px 80px rgba(0,0,0,0.85), 0 0 0 1px rgba(201,168,76,0.18); }
+  }
+
+  /* Persistent gold aura around the tome */
+  .book {
+    box-shadow: 0 0 60px rgba(201,168,76,0.12), 0 30px 80px rgba(0,0,0,0.85), 0 0 0 1px rgba(201,168,76,0.18);
+  }
+
+  /* Spine */
+  .book::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 3px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom,
+      rgba(201,168,76,0.0),
+      rgba(201,168,76,0.5) 30%,
+      rgba(201,168,76,0.7) 50%,
+      rgba(201,168,76,0.5) 70%,
+      rgba(201,168,76,0.0)
+    );
+    z-index: 10;
+    pointer-events: none;
+    animation: spinePulse 3s ease-in-out infinite;
+  }
+  @keyframes spinePulse {
+    0%, 100% { opacity: 0.6; }
+    50%       { opacity: 1; filter: drop-shadow(0 0 6px rgba(201,168,76,0.8)); }
+  }
+
+  /* book transition placeholder */
+  .book { transition: none; }
+
+  /* DIN A5 pages — dark vellum */
+  .book-page {
+    width: 400px;
+    height: 700px;
+    background: #1a1508;
+    color: #c8b87a;
+    padding: 5rem 2.8rem 5rem;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Cormorant Garamond', serif;
+    border: 1px solid rgba(201,168,76,0.12);
+    flex-shrink: 0;
+  }
+  .book-page.left {
+    border-right: 1px solid rgba(201,168,76,0.08);
+    box-shadow: inset -12px 0 30px rgba(0,0,0,0.4);
+  }
+  .book-page.right {
+    border-left: none;
+    box-shadow: inset 12px 0 30px rgba(0,0,0,0.4);
+  }
+
+  /* Vignette + subtle line texture */
+  .book-page::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.35) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 27px,
+        rgba(201,168,76,0.03) 27px,
+        rgba(201,168,76,0.03) 28px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Corner ornaments */
+  .book-page::after {
+    content: '';
+    position: absolute;
+    top: 1.2rem; left: 1.2rem; right: 1.2rem; bottom: 1.2rem;
+    border: 1px solid rgba(201,168,76,0.07);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Page number */
+  .page-number {
+    position: absolute; bottom: 1.8rem;
+    font-size: 0.6rem; font-family: 'Cinzel', serif;
+    color: rgba(201,168,76,0.4); letter-spacing: 0.25em;
+    z-index: 2;
+  }
+  .book-page.left .page-number { left: 3rem; }
+  .book-page.right .page-number { right: 3rem; }
+
+  /* Page content */
+  .book-content { position: relative; z-index: 1; }
+  .book-content > .book-section-head:first-child { margin-top: 0; }
+
+  .book-paper-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--gold-pale);
+    letter-spacing: 0.08em;
+    line-height: 1.45;
+    margin-bottom: 0.4rem;
+  }
+  .book-paper-author {
+    font-size: 0.75rem; font-style: italic;
+    color: #c9a84c; margin-bottom: 0.2rem;
+  }
+  .book-paper-pub {
+    font-size: 0.6rem; letter-spacing: 0.12em;
+    color: rgba(201,168,76,0.55); margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .book-divider {
+    width: 40px; height: 1px;
+    background: rgba(201,168,76,0.2);
+    margin-bottom: 1.5rem;
+  }
+  .book-section-head {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem; font-weight: 600;
+    color: #e8c870; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem; margin-top: 1.2rem;
+  }
+  .book-text {
+    font-size: 0.87rem;
+    line-height: 1.9;
+    color: #d4bc80;
+    text-align: justify;
+    hyphens: auto;
+  }
+  .book-text + .book-text { margin-top: 0.75rem; }
+  .book-note {
+    font-size: 0.78rem; font-style: italic;
+    color: #a89060; line-height: 1.75;
+    margin-top: 0.8rem;
+  }
+  .book-restricted {
+    font-size: 0.48rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: rgba(220,90,70,0.9);
+    border: 1px solid rgba(220,90,70,0.4);
+    display: inline-block; padding: 0.25rem 0.7rem;
+    margin-bottom: 1.4rem;
+  }
+  .book-colophon {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    font-size: 0.68rem; font-style: italic;
+    color: rgba(201,168,76,0.5); line-height: 1.7;
+  }
+
+  /* DIAMOND ARROWS */
+  .book-with-arrows {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .book-arrow {
+    width: 2.8rem; height: 2.8rem;
+    display: flex; align-items: center; justify-content: center;
+    transform: rotate(45deg);
+    border: 1px solid rgba(201,168,76,0.35);
+    background: rgba(201,168,76,0.04);
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    flex-shrink: 0;
+    animation: arrowGlow 2.5s ease-in-out infinite;
+  }
+  @keyframes arrowGlow {
+    0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.2); }
+    50%       { box-shadow: 0 0 18px rgba(201,168,76,0.5); }
+  }
+  .book-arrow:hover {
+    border-color: rgba(201,168,76,0.8);
+    background: rgba(201,168,76,0.1);
+    box-shadow: 0 0 24px rgba(201,168,76,0.6);
+    animation: none;
+  }
+  .book-arrow:disabled { opacity: 0.15; cursor: default; pointer-events: none; animation: none; }
+
+  /* Arrow inner — counter-rotate so the arrow character is upright */
+  .book-arrow span {
+    display: block;
+    transform: rotate(-45deg);
+    font-size: 1rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .book-progress {
+    font-size: 0.48rem; letter-spacing: 0.35em;
+    color: rgba(201,168,76,0.35); text-transform: uppercase;
+    text-align: center; display: block;
+  }
+  }
+
+  @media (max-width: 900px) {
+    .book { flex-direction: column; }
+    .book-page { width: min(90vw, 420px); }
+    .book-page.left { border-right: none; border-bottom: 1px solid rgba(100,80,40,0.25); }
+    nav { padding: 1.5rem 1.5rem; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">The Sunfury Accord</a>
+  <ul class="nav-links">
+    <li><a href="ranks.html">Codex</a></li>
+    <li><a href="lore.html">Archives</a></li>
+    <li><a href="index.html#recruitment">Join</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="section-label">The Sunfury Accord</p>
+  <h1 class="page-title">Academic Library</h1>
+  <p class="page-subtitle">Works submitted to the Accord's record. Restricted circulation unless otherwise noted.</p>
+</div>
+
+<div class="library-body">
+
+  <div class="category-block">
+    <p class="category-label">Discipline</p>
+    <h2 class="category-title">Arcane &amp; Fel Theory</h2>
+
+    <div class="paper-row" data-paper="wrathsworn">
+      <div class="paper-meta">
+        <span class="paper-classification restricted">Restricted Circulation</span>
+        <span class="paper-title">Spellform as Chassis: Delivering Volatile Payloads Through Stable Geometry</span>
+        <span class="paper-author">Magister Vael'tharyn Wrathsworn</span>
+        <p class="paper-desc">Published under the auspices of the Magisters' Collegium. An examination of multiphase arcane field geometry as a containment framework for fel propagation, and a critique of the four prior approaches that failed to distinguish between the energy and the entity producing it.</p>
+      </div>
+      <span class="paper-read">Read →</span>
+    </div>
+
+  </div>
+
+  <!-- Future categories can be added here -->
+
+</div>
+
+<footer>
+  <div class="footer-logo">The Sunfury Accord</div>
+  <div class="footer-links">
+    <a href="lore.html">Archives</a>
+    <a href="ranks.html">Codex</a>
+    <a href="index.html#manifest">Manifest</a>
+    <a href="index.html#recruitment">Join</a>
+  </div>
+  <div class="footer-text">Argent Dawn EU &nbsp;·&nbsp; Midnight</div>
+</footer>
+
+<div id="spotlight"></div>
+
+<!-- ============================================================
+     BOOK OVERLAY
+============================================================ -->
+<div class="book-overlay" id="bookOverlay">
+  <div class="book-container">
+    <button class="book-close" id="bookClose">Close ✕</button>
+    <div class="book-with-arrows">
+      <button class="book-arrow" id="btnPrev" aria-label="Previous"><span>&#8592;</span></button>
+      <div class="book" id="bookViewer">
+        <div class="book-page left" id="pageLeft">
+          <div class="book-content" id="pageLeftContent"></div>
+          <span class="page-number" id="pageNumLeft"></span>
+        </div>
+        <div class="book-page right" id="pageRight">
+          <div class="book-content" id="pageRightContent"></div>
+          <span class="page-number" id="pageNumRight"></span>
+        </div>
+      </div>
+      <button class="book-arrow" id="btnNext" aria-label="Next"><span>&#8594;</span></button>
+    </div>
+    <span class="book-progress" id="bookProgress"></span>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// PAPER DATA — each entry is an array of page HTML strings
+// One spread = two pages. Page index 0 = left, 1 = right, etc.
+// ============================================================
+
+const papers = {
+  wrathsworn: {
+    title: 'Spellform as Chassis',
+    pages: [
+      // Page 1 — Title page (left of first spread)
+      `<div class="book-restricted">Restricted Circulation</div>
+       <div class="book-paper-title">Spellform as Chassis: Delivering Volatile Payloads Through Stable Geometry</div>
+       <div class="book-paper-author">Magister Vael'tharyn Wrathsworn</div>
+       <div class="book-paper-pub">Published under the auspices of the Magisters' Collegium</div>
+       <div class="book-note" style="margin-top:2rem;">Prefatory note.<br><br>
+       The argument made here is not that fel can be made safe. Safety is the wrong frame for this work. The productive question is whether the practitioner has built something capable of surviving repeated contact with what they are handling, because the energy in question will not become less dangerous to accommodate their preferences.
+       </div>
+       <div class="book-note" style="margin-top:1rem;">
+       Danger within a coherent structure is engineering. Without it, the same danger is simply an accident in progress.
+       </div>`,
+
+      // Page 2 — Prefatory note continued (right of first spread)
+      `<div class="book-section-head">Prefatory Note, continued</div>
+       <div class="book-text">The approach documented here grew out of work on arcane barrier geometry, several decades of it, including the maintenance of Ban'dinoriel, and from the observation that the same field principles developed for purely arcane applications describe fel propagation with considerably more precision than the demonological literature ever attempted.</div>
+       <div class="book-text">The demonologists were too busy managing their demons to study the energy those demons produced. This paper is concerned with the energy.</div>`,
+
+      // Page 3
+      `<div class="book-section-head">I. What Has Been Tried</div>
+       <div class="book-note" style="margin-bottom:0.8rem;">Four approaches. Four wrong assumptions.</div>
+       <div class="book-text">The problem of working with fel without being consumed by it has attracted serious attention across several traditions, and none of them have arrived at a satisfactory solution. The documented outcomes share a common premise, and that premise is the source of the difficulty.</div>
+       <div class="book-section-head" style="margin-top:1.2rem;">Physical Binding</div>
+       <div class="book-text">During Silvermoon's reconstruction, demonic entities were imprisoned in crystalline structures and their energy siphoned to sustain the city's infrastructure. The crystals supplied what the Sunwell no longer could, and for a time the arrangement held.</div>
+       <div class="book-text">But the practitioner in this model never engages the energy itself, only the container. When the Sunwell was restored and the crystals were no longer needed, they were simply removed. The energy inside them had never been examined.</div>`,
+
+      // Page 4
+      `<div class="book-text">It had been stored, and the question of whether the sin'dorei understood what they were storing was never considered worth asking. For a provisional measure in a period of crisis, this was forgivable. As a model for fel practice, it has nothing to offer.</div>
+       <div class="book-section-head">Arcane Force Field Containment</div>
+       <div class="book-text">The Shen'dralar of Eldre'Thalas attempted something more sophisticated: five pylons generating a sustained arcane force field around the demon Immol'thar, from which his energy could be siphoned continuously over thousands of years. The engineering held far longer than anything achieved through simple crystal binding.</div>
+       <div class="book-text">Eventually, however, the cost of sustaining the field exceeded the energy it produced, and when it failed, those who had built their practice around it had nothing to replace it with. An approach that collapses precisely at the point of greatest demand has not solved the problem. It has delayed it.</div>`,
+
+      // Page 5
+      `<div class="book-section-head">Direct Arcane Opposition</div>
+       <div class="book-text">The Illidari mark their bodies with arcane runes on the principle that arcane energy counters fel. As a principle, this is defensible. As an application, it requires closer examination.</div>
+       <div class="book-text">A static arcane inscription presents a single fixed frequency to a chaotic system, and fel does not negotiate with fixed structures. It finds their resonant weaknesses and degrades them over time. The runes hold not because the geometry is sound but because the bearer's willpower continuously supplements what the geometry cannot sustain alone. The Illidari have solved the problem of the demon within them by agreeing to fight it permanently.</div>
+       <div class="book-text">Whether this constitutes a solution depends on one's standards.</div>`,
+
+      // Page 6
+      `<div class="book-section-head">Chemical Purification</div>
+       <div class="book-text">Magister Duskwither's attempt to filter the corrupting properties from fel energy sources in order to render them consumable is perhaps the most instructive failure available to us. Early results were promising enough that he redirected most of his apprentices to the work. Then those apprentices collapsed. The research was subsequently burned.</div>
+       <div class="book-text">Duskwither's error was categorical: he treated fel as a substance with separable properties rather than a propagation phenomenon with behavior. Filtering a wave's frequencies is not the same problem as filtering impurities from water, and the methodology that succeeds for one fails entirely for the other.</div>
+       <div class="book-text">The question that should have been asked was not what fel contains but how it moves.</div>
+       <div class="book-note" style="margin-top:1rem;">Four traditions, one shared premise: that fel is an object requiring management rather than a system requiring understanding.</div>`,
+
+      // Page 7
+      `<div class="book-section-head">II. The Nature of the Problem, Restated</div>
+       <div class="book-note" style="margin-bottom:0.8rem;">Two volatile systems. One practitioner.</div>
+       <div class="book-text">Most approaches to fel management rest on an assumption worth naming directly: that arcane magic is stable and fel is not, and that the practitioner's task is therefore to apply the stable system against the unstable one.</div>
+       <div class="book-text">This assumption is incorrect, and correcting it changes the analysis considerably.</div>
+       <div class="book-text">Arcane energy is innately volatile. Wielding it requires intense precision and concentration, not as a precaution, but as the condition under which it functions at all. The volatility that makes arcane dangerous to the careless is the same property that makes it powerful in the hands of someone who has spent decades learning to direct it.</div>`,
+
+      // Page 8
+      `<div class="book-text">Fel is volatile in a different register. Where arcane volatility responds to precision and can be directed by it, fel propagation is entropic: it spreads chaotically, consumes structure on contact, and resists the imposition of external order.</div>
+       <div class="book-text">Precision cannot stabilize it the way it stabilizes arcane. What precision can do is prepare the surrounding medium before the fel arrives, leaving it no path except the one already chosen.</div>
+       <div class="book-text">The correct framing, then, is two volatile systems, one of which can be shaped by the practitioner's discipline, the other of which can only be given a prepared environment to propagate through. Precision holds both in a workable configuration simultaneously. It is not a property that makes the work safer in some marginal sense. It is the only thing keeping either system from becoming the primary problem.</div>`,
+
+      // Page 9
+      `<div class="book-section-head">III. The Frequency Framework</div>
+       <div class="book-note" style="margin-bottom:0.8rem;">Multiphase arcane fields and spatial dominance.</div>
+       <div class="book-text">A single-phase arcane field, however carefully constructed, presents fel with a legible target. The same volatility that makes arcane manageable under precision makes it vulnerable to entropic interference when held in a fixed configuration.</div>
+       <div class="book-text">The chaotic propagation of fel will locate the field's resonant weaknesses and work on them until the structure degrades. The practical response is to construct arcane fields that do not hold a fixed configuration: fields that fluctuate across multiple simultaneous phases, presenting a continuously shifting interference pattern that the surrounding medium cannot resolve into any single exploitable frequency.</div>`,
+
+      // Page 10
+      `<div class="book-text">When such a field is sufficiently dense and coherent, it achieves something that static containment never managed: spatial dominance. The local magical substrate becomes so thoroughly occupied by ordered arcane fluctuation that the fel entering the space finds no path of least resistance except the ones the arcane structure has already defined.</div>
+       <div class="book-text">The fel is not being opposed. The available geometry has simply been arranged in advance.</div>
+       <div class="book-note" style="margin-top:0.8rem;font-style:normal;font-weight:600;color:#2a1f0f;">The fel is not contained. The space around it is claimed. There is a difference, and it matters.</div>
+       <div class="book-text" style="margin-top:0.8rem;">At this level of execution the two energies do not meet directly. The arcane phases occupy the surrounding medium; the fel moves through the only geometry available, which the practitioner chose before the discharge occurred. The spellform functions as chassis: a volatile payload traveling a road it did not build and cannot alter.</div>`,
+
+      // Page 11
+      `<div class="book-section-head">On Failure Modes</div>
+       <div class="book-text">A multiphase field that is insufficiently dense or imprecisely phased achieves partial spatial dominance at best. The arcane complexity still redirects the fel, but the field degrades in the process, recoverable but not a stable operating condition.</div>
+       <div class="book-text">Below a certain threshold of phase precision, the relationship between the two systems inverts: the fel's chaotic frequencies overwhelm the arcane structure, consuming it from the boundary inward. At that point the practitioner is no longer working within a chassis. They are managing an unmediated fel discharge with whatever time and resources remain.</div>
+       <div class="book-text">Prior documented instances of this failure mode have not been encouraging.</div>`,
+
+      // Page 12
+      `<div class="book-section-head">IV. Bound Entities as Environmental Factors</div>
+       <div class="book-note" style="margin-bottom:0.8rem;">The Infernal as medium, not source.</div>
+       <div class="book-text">The demonological tradition treats bound entities as reservoirs from which power is extracted and directed. For the purposes of that tradition, the framing is adequate. For the present work, it obscures something more useful.</div>
+       <div class="book-text">A bound entity of sufficient magnitude alters the local magical substrate as a consequence of its manifestation, specifically by elevating the ambient fel saturation of the surrounding medium. This is not a directed output. It is an environmental condition, as consistent and as impersonal as heat from combustion.</div>`,
+
+      // Page 13
+      `<div class="book-text">A well-constructed multiphase arcane field operating within that elevated medium achieves higher spatial dominance than the same field would in ordinary conditions. The phase geometry has not changed. The medium it is operating in has, and that changes what the geometry can accomplish.</div>
+       <div class="book-text">The practitioner who understands this summons an Infernal not to draw on its power but to alter the conditions under which their own field geometry operates. A dependency on an entity's continued cooperation introduces a variable the practitioner cannot fully control. A dependency on the physical consequences of that entity's presence requires only that the timing be correct, which is entirely within the practitioner's control.</div>`,
+
+      // Page 14
+      `<div class="book-section-head">V. Prerequisites for Practice</div>
+       <div class="book-note" style="margin-bottom:0.8rem;">What the practitioner must already be.</div>
+       <div class="book-text">The frequency framework cannot be learned in isolation from the arcane tradition that underlies it. It is an application of field theory developed over centuries of purely arcane work, and practitioners who attempt it without that foundation will encounter the field's failure modes before they encounter its capabilities.</div>
+       <div class="book-section-head" style="margin-top:1rem;">Command of Arcane Volatility</div>
+       <div class="book-text">Because arcane is itself volatile, a practitioner who cannot hold complex field configurations without active strain has nothing to build on here. The phase structures required are not simple, and they must be maintained while a second entropic system operates in proximity.</div>`,
+
+      // Page 15
+      `<div class="book-section-head">Geometric Precision at the Field Boundary</div>
+       <div class="book-text">The boundary between the arcane phase field and the fel propagation space is where failures originate. Imprecision there creates regions where the arcane presents a simplified or static frequency, which is exactly the condition that allows fel to find purchase. Precision in the field's interior is a prerequisite but insufficient on its own. The boundary requires attention as a distinct problem.</div>
+       <div class="book-section-head">Sequencing Discipline</div>
+       <div class="book-text">Each discharge must be complete before the next is introduced. Under field conditions with ambient fel saturation elevated, this discipline is harder to maintain than it appears in theory, and the consequences of abandoning it arrive faster than the practitioner typically expects.</div>
+       <div class="book-text">The standard required is not exceptional. It is consistent, and consistency under pressure is developed through practice rather than through understanding the reasons for the requirement.</div>`,
+
+      // Page 16 — Final page
+      `<div class="book-section-head">VI. On the Question of Safety</div>
+       <div class="book-note" style="margin-bottom:0.8rem;">Between two errors.</div>
+       <div class="book-text">Two positions on fel practice dominate current discourse. The first holds that fel is a tool to be bound, commanded, spent. Beyond a certain point, the assumption becomes the weakness: binding a demon is not the same as understanding the energy it produces.</div>
+       <div class="book-text">The second holds that fel is simply unworkable. This view is understandable. It is also a refusal to examine the outcomes carefully enough. The corruption follows from contact without geometry. The energy is not the variable that matters. The structure around it is.</div>
+       <div class="book-text">The sin'dorei did not survive by refusing difficult knowledge. They survived by learning to hold it correctly.</div>
+       <div class="book-colophon">Magister Vael'tharyn Wrathsworn · Restricted circulation · Reproduction without attribution is theft; attribution without comprehension is flattery.</div>`,
+    ]
+  }
+};
+
+// ============================================================
+// VIEWER LOGIC
+// ============================================================
+let currentPaper = null;
+let currentSpread = 0; // spread index: 0 = pages 0+1, 1 = pages 2+3, etc.
+
+function totalSpreads(paper) {
+  return Math.ceil(paper.pages.length / 2);
+}
+
+function renderSpread() {
+  const paper = papers[currentPaper];
+  const leftIdx  = currentSpread * 2;
+  const rightIdx = currentSpread * 2 + 1;
+
+  document.getElementById('pageLeftContent').innerHTML  = paper.pages[leftIdx]  || '';
+  document.getElementById('pageRightContent').innerHTML = paper.pages[rightIdx] || '';
+
+  document.getElementById('pageNumLeft').textContent  = leftIdx  < paper.pages.length ? leftIdx + 1  : '';
+  document.getElementById('pageNumRight').textContent = rightIdx < paper.pages.length ? rightIdx + 1 : '';
+
+  const spreads = totalSpreads(paper);
+  document.getElementById('bookProgress').textContent = `${currentSpread + 1} / ${spreads}`;
+  document.getElementById('btnPrev').disabled = currentSpread === 0;
+  document.getElementById('btnNext').disabled = currentSpread >= spreads - 1;
+}
+
+function openBook(paperId) {
+  currentPaper = paperId;
+  currentSpread = 0;
+  renderSpread();
+  document.getElementById('bookOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBook() {
+  document.getElementById('bookOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Paper rows
+document.querySelectorAll('.paper-row').forEach(row => {
+  row.addEventListener('click', () => {
+    const id = row.dataset.paper;
+    if (papers[id]) openBook(id);
+  });
+});
+
+document.getElementById('bookClose').addEventListener('click', closeBook);
+document.getElementById('bookOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('bookOverlay')) closeBook();
+});
+document.querySelector('.book-container').addEventListener('click', e => {
+  e.stopPropagation();
+});
+
+// ============================================================
+// SPARK BURST — emitted from spine on page turn
+// ============================================================
+const sparkCanvas = document.createElement('canvas');
+sparkCanvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+document.body.appendChild(sparkCanvas);
+const sc = sparkCanvas.getContext('2d');
+function resizeSpark() { sparkCanvas.width = window.innerWidth; sparkCanvas.height = window.innerHeight; }
+resizeSpark();
+window.addEventListener('resize', resizeSpark);
+
+let activeSparkBursts = [];
+
+function burstSparks(direction) {
+  const book = document.getElementById('bookViewer');
+  const rect = book.getBoundingClientRect();
+  const originX = direction === 'forward' ? rect.right : rect.left;
+  const vxBase  = direction === 'forward' ? -1 : 1;
+  for (let i = 0; i < 45; i++) {
+    const originY = rect.top + Math.random() * rect.height;
+    activeSparkBursts.push(new SpineSpark(originX, originY, vxBase));
+  }
+}
+
+class SpineSpark {
+  constructor(x, y, vxBase) {
+    this.x = x;
+    this.y = y;
+    const speed = 8 + Math.random() * 10;
+    this.vx = vxBase * speed;
+    this.vy = (Math.random() - 0.5) * 1.5;
+    this.size = 0.8 + Math.random() * 1.6;
+    this.life = 0;
+    this.maxLife = 55 + Math.random() * 40;
+    this.drag = 0.985 + Math.random() * 0.01;
+  }
+  update() {
+    this.vx *= this.drag;
+    this.vy *= this.drag;
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+  }
+  draw(ctx) {
+    const progress = this.life / this.maxLife;
+    const alpha = progress < 0.1 ? progress / 0.1 : 1 - progress;
+    const opacity = alpha * 0.9;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(120, 85%, 68%, ${opacity})`;
+    ctx.fill();
+    const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 4);
+    grad.addColorStop(0, `hsla(100, 90%, 55%, ${opacity * 0.5})`);
+    grad.addColorStop(1, `hsla(120, 80%, 40%, 0)`);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size * 4, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+  }
+  dead() { return this.life >= this.maxLife; }
+}
+
+function drawSparks(ts) {
+  sc.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
+  activeSparkBursts = activeSparkBursts.filter(s => !s.dead());
+  activeSparkBursts.forEach(s => { s.update(); s.draw(sc); });
+  requestAnimationFrame(drawSparks);
+}
+requestAnimationFrame(drawSparks);
+
+function flashTurn(callback, direction) {
+  burstSparks(direction);
+  callback();
+}
+
+document.getElementById('btnPrev').addEventListener('click', () => {
+  if (currentSpread > 0) flashTurn(() => { currentSpread--; renderSpread(); }, 'back');
+});
+document.getElementById('btnNext').addEventListener('click', () => {
+  const paper = papers[currentPaper];
+  if (currentSpread < totalSpreads(paper) - 1) flashTurn(() => { currentSpread++; renderSpread(); }, 'forward');
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  const overlay = document.getElementById('bookOverlay');
+  if (!overlay.classList.contains('open')) return;
+  if (e.key === 'ArrowRight') document.getElementById('btnNext').click();
+  if (e.key === 'ArrowLeft')  document.getElementById('btnPrev').click();
+  if (e.key === 'Escape')     closeBook();
+});
+
+// Spotlight
+const spotlight = document.getElementById('spotlight');
+let isHoveringInteractive = false;
+document.addEventListener('mousemove', e => {
+  spotlight.style.left = e.clientX + 'px';
+  spotlight.style.top  = e.clientY + 'px';
+  spotlight.style.background = isHoveringInteractive
+    ? 'radial-gradient(circle, rgba(79,168,58,0.08) 0%, transparent 70%)'
+    : 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)';
+});
+document.querySelectorAll('a, button, .paper-row').forEach(el => {
+  el.addEventListener('mouseenter', () => { isHoveringInteractive = true; });
+  el.addEventListener('mouseleave', () => { isHoveringInteractive = false; });
+});
+</script>
+</body>
+</html>
