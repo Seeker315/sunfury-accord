@@ -251,7 +251,7 @@
       <h3 class="archive-tooltip-title">Academic Works</h3>
       <div class="archive-tooltip-divider"></div>
       <p class="archive-tooltip-text">Papers, theses, and restricted field theory submitted to the Accord's record.</p>
-      <a href="library.html" class="archive-tooltip-btn">Enter →</a>
+      <a href="#academic-works" class="archive-tooltip-btn">View →</a>
     </div>
     <div class="archive-marker-dot"></div>
   </div>
@@ -278,27 +278,81 @@
 </div>
 
 <!-- ACADEMIC WORKS BLOCK -->
-<div style="max-width:900px;margin:4rem auto;padding:0 2rem 6rem;">
-  <div class="academic-block" style="border:1px solid rgba(122,26,26,0.35);padding:2.5rem 2.5rem 2rem;transition:border-color 0.3s,box-shadow 0.3s;cursor:pointer;" onclick="window.location='library.html'">
+<div style="max-width:900px;margin:4rem auto;padding:0 2rem 8rem;" id="academic-works">
 
-    <!-- Block header -->
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(122,26,26,0.2);">
-      <h3 class="academic-title" style="font-family:'Cinzel',serif;font-size:1rem;font-weight:400;color:var(--gold);letter-spacing:0.12em;transition:color 0.3s;">Academic Works</h3>
-      <span class="academic-link" style="font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-dim);transition:color 0.3s;">Full Library &#x2192;</span>
+  <div style="margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(122,26,26,0.35);">
+    <p style="font-size:0.5rem;font-weight:400;letter-spacing:0.45em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem;">Archive Category</p>
+    <h3 style="font-family:'Cinzel',serif;font-size:1rem;font-weight:400;color:var(--gold);letter-spacing:0.12em;">Academic Works</h3>
+  </div>
+
+  <div class="paper-row" data-paper="wrathsworn" style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem 2rem;padding:1.5rem;border:1px solid rgba(122,26,26,0.3);cursor:pointer;transition:border-color 0.3s,box-shadow 0.3s;">
+    <div>
+      <span style="display:block;font-size:0.45rem;letter-spacing:0.35em;text-transform:uppercase;color:#c06060;margin-bottom:0.3rem;">Restricted Circulation</span>
+      <span class="pr-title" style="display:block;font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);letter-spacing:0.03em;margin-bottom:0.25rem;transition:color 0.2s;">Spellform as Chassis: Delivering Volatile Payloads Through Stable Geometry</span>
+      <span style="display:block;font-size:0.55rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);">Magister Vael'tharyn Wrathsworn</span>
     </div>
+    <span class="pr-btn" style="font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--fel-bright);border:1px solid rgba(79,168,58,0.4);padding:0.45rem 0.9rem;white-space:nowrap;transition:color 0.2s,border-color 0.2s;">Read &#x2192;</span>
+  </div>
 
-    <!-- Paper entry -->
-    <div style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem 2rem;padding:1.25rem 0;border-bottom:1px solid rgba(90,82,72,0.15);">
-      <div>
-        <span style="display:block;font-size:0.45rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(122,26,26,0.6);margin-bottom:0.3rem;">Restricted Circulation</span>
-        <span style="display:block;font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);letter-spacing:0.03em;margin-bottom:0.25rem;">Spellform as Chassis: Delivering Volatile Payloads Through Stable Geometry</span>
-        <span style="display:block;font-size:0.55rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);">Magister Vael'tharyn Wrathsworn</span>
-      </div>
-      <span class="academic-btn" style="font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);padding:0.45rem 0.9rem;white-space:nowrap;transition:color 0.3s,border-color 0.3s;">Read &#x2192;</span>
-    </div>
+</div>
 
+<!-- PAPER OVERLAY -->
+<div id="paperOverlay" style="position:fixed;inset:0;z-index:1000;background:rgba(5,4,6,0.94);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity 0.35s;display:flex;align-items:flex-start;justify-content:center;padding:6rem 2rem 4rem;overflow-y:auto;">
+  <div id="paperContent" style="max-width:680px;width:100%;position:relative;" onclick="event.stopPropagation()">
+    <button id="paperClose" style="position:fixed;top:2rem;right:2.5rem;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-dim);background:none;border:none;cursor:pointer;font-family:'Raleway',sans-serif;transition:color 0.2s;">Close ✕</button>
   </div>
 </div>
+
+<style>
+  .paper-row:hover .pr-title { color: var(--gold-pale); }
+  .paper-row:hover .pr-btn { color: var(--fel-bright); border-color: rgba(79,168,58,0.5); }
+  .paper-row:hover { border-color: rgba(79,168,58,0.55) !important; box-shadow: 0 0 24px rgba(79,168,58,0.08); }
+
+  /* OVERLAY PAPER TYPOGRAPHY */
+  .overlay-restricted {
+    font-size: 0.48rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: #e07070; border: 1px solid rgba(220,110,110,0.45);
+    display: inline-block; padding: 0.25rem 0.7rem; margin-bottom: 2rem;
+  }
+  .overlay-title {
+    font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 600; color: #f0dfa0; letter-spacing: 0.06em;
+    line-height: 1.4; margin-bottom: 0.5rem;
+  }
+  .overlay-author {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 0.95rem; color: #c9a84c; margin-bottom: 0.25rem;
+  }
+  .overlay-pub {
+    font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #7a6a50; margin-bottom: 3rem;
+  }
+  .overlay-divider {
+    width: 60px; height: 1px; background: rgba(201,168,76,0.3); margin-bottom: 3rem;
+  }
+  .overlay-section {
+    font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 600;
+    color: #c9a84c; letter-spacing: 0.18em; text-transform: uppercase;
+    margin-top: 2.5rem; margin-bottom: 0.75rem;
+  }
+  .overlay-section:first-of-type { margin-top: 0; }
+  .overlay-note {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1rem; color: #a09070; line-height: 1.85;
+    margin-bottom: 1.25rem;
+  }
+  .overlay-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; line-height: 2; color: #d8cca8;
+    margin-bottom: 1.25rem;
+  }
+  .overlay-colophon {
+    margin-top: 3rem; padding-top: 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 0.88rem; color: #6a5a40; line-height: 1.8;
+  }
+</style>
 
 <footer>
   <div class="footer-logo">The Sunfury Accord</div>
@@ -349,6 +403,14 @@
     marker.addEventListener('mouseleave', hide);
     tooltip.addEventListener('mouseenter', show);
     tooltip.addEventListener('mouseleave', hide);
+
+    // Allow tooltip button clicks to work — close tooltip immediately
+    const btn = tooltip.querySelector('.archive-tooltip-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        tooltip.classList.remove('pinned');
+      });
+    }
   });
 
   // Star canvas — safe zones only (open sky between vault arches)
@@ -447,25 +509,100 @@
   });
 
   // Academic Works block hover
-  const academicBlock = document.querySelector('.academic-block');
-  if (academicBlock) {
-    academicBlock.addEventListener('mouseenter', () => {
-      academicBlock.style.borderColor = 'rgba(79,168,58,0.55)';
-      academicBlock.style.boxShadow = '0 0 28px rgba(79,168,58,0.08), inset 0 0 40px rgba(79,168,58,0.03)';
-      academicBlock.querySelector('.academic-title').style.color = 'var(--fel-bright)';
-      academicBlock.querySelector('.academic-link').style.color = 'var(--fel-bright)';
-      academicBlock.querySelector('.academic-btn').style.color = 'var(--fel-bright)';
-      academicBlock.querySelector('.academic-btn').style.borderColor = 'rgba(79,168,58,0.5)';
-    });
-    academicBlock.addEventListener('mouseleave', () => {
-      academicBlock.style.borderColor = 'rgba(122,26,26,0.35)';
-      academicBlock.style.boxShadow = 'none';
-      academicBlock.querySelector('.academic-title').style.color = 'var(--gold)';
-      academicBlock.querySelector('.academic-link').style.color = 'var(--gold-dim)';
-      academicBlock.querySelector('.academic-btn').style.color = 'var(--gold-dim)';
-      academicBlock.querySelector('.academic-btn').style.borderColor = 'rgba(201,168,76,0.2)';
-    });
+  document.querySelectorAll('.paper-row').forEach(row => {
+    row.addEventListener('click', () => openPaper(row.dataset.paper));
+  });
+
+  // Paper data
+  const papers = {
+    wrathsworn: `
+      <div class="overlay-restricted">Restricted Circulation</div>
+      <h1 class="overlay-title">Spellform as Chassis: Delivering Volatile Payloads Through Stable Geometry</h1>
+      <div class="overlay-author">Magister Vael'tharyn Wrathsworn</div>
+      <div class="overlay-pub">Published under the auspices of the Magisters' Collegium</div>
+      <div class="overlay-divider"></div>
+
+      <div class="overlay-note">The argument made here is not that fel can be made safe. Safety is the wrong frame for this work. The productive question is whether the practitioner has built something capable of surviving repeated contact with what they are handling, because the energy in question will not become less dangerous to accommodate their preferences. Danger within a coherent structure is engineering. Without it, the same danger is simply an accident in progress.</div>
+      <div class="overlay-note">The approach documented here grew out of work on arcane barrier geometry, several decades of it, including the maintenance of Ban'dinoriel, and from the observation that the same field principles developed for purely arcane applications describe fel propagation with considerably more precision than the demonological literature ever attempted. The demonologists were too busy managing their demons to study the energy those demons produced. This paper is concerned with the energy.</div>
+
+      <div class="overlay-section">I. What Has Been Tried</div>
+      <div class="overlay-note">Four approaches. Four wrong assumptions.</div>
+      <div class="overlay-text">The problem of working with fel without being consumed by it has attracted serious attention across several traditions, and none of them have arrived at a satisfactory solution. The documented outcomes share a common premise, and that premise is the source of the difficulty.</div>
+      <div class="overlay-section">Physical Binding</div>
+      <div class="overlay-text">During Silvermoon's reconstruction, demonic entities were imprisoned in crystalline structures and their energy siphoned to sustain the city's infrastructure. The crystals supplied what the Sunwell no longer could, and for a time the arrangement held. But the practitioner in this model never engages the energy itself, only the container. When the Sunwell was restored and the crystals were no longer needed, they were simply removed. The energy inside them had never been examined. It had been stored, and the question of whether the sin'dorei understood what they were storing was never considered worth asking. For a provisional measure in a period of crisis, this was forgivable. As a model for fel practice, it has nothing to offer.</div>
+      <div class="overlay-section">Arcane Force Field Containment</div>
+      <div class="overlay-text">The Shen'dralar of Eldre'Thalas attempted something more sophisticated: five pylons generating a sustained arcane force field around the demon Immol'thar, from which his energy could be siphoned continuously over thousands of years. The engineering held far longer than anything achieved through simple crystal binding. Eventually, however, the cost of sustaining the field exceeded the energy it produced, and when it failed, those who had built their practice around it had nothing to replace it with. An approach that collapses precisely at the point of greatest demand has not solved the problem. It has delayed it.</div>
+      <div class="overlay-section">Direct Arcane Opposition</div>
+      <div class="overlay-text">The Illidari mark their bodies with arcane runes on the principle that arcane energy counters fel. As a principle, this is defensible. As an application, it requires closer examination. A static arcane inscription presents a single fixed frequency to a chaotic system, and fel does not negotiate with fixed structures. It finds their resonant weaknesses and degrades them over time. The runes hold not because the geometry is sound but because the bearer's willpower continuously supplements what the geometry cannot sustain alone. The Illidari have solved the problem of the demon within them by agreeing to fight it permanently. Whether this constitutes a solution depends on one's standards.</div>
+      <div class="overlay-section">Chemical Purification</div>
+      <div class="overlay-text">Magister Duskwither's attempt to filter the corrupting properties from fel energy sources in order to render them consumable is perhaps the most instructive failure available to us. Early results were promising enough that he redirected most of his apprentices to the work. Then those apprentices collapsed. The research was subsequently burned. Duskwither's error was categorical: he treated fel as a substance with separable properties rather than a propagation phenomenon with behavior. Filtering a wave's frequencies is not the same problem as filtering impurities from water. The question that should have been asked was not what fel contains but how it moves.</div>
+      <div class="overlay-note">Four traditions, one shared premise: that fel is an object requiring management rather than a system requiring understanding. The object they were managing does not exist in the form they assumed. The system does.</div>
+
+      <div class="overlay-section">II. The Nature of the Problem, Restated</div>
+      <div class="overlay-note">Two volatile systems. One practitioner.</div>
+      <div class="overlay-text">Most approaches to fel management rest on an assumption worth naming directly: that arcane magic is stable and fel is not, and that the practitioner's task is therefore to apply the stable system against the unstable one. This assumption is incorrect, and correcting it changes the analysis considerably.</div>
+      <div class="overlay-text">Arcane energy is innately volatile. Wielding it requires intense precision and concentration, not as a precaution, but as the condition under which it functions at all. The volatility that makes arcane dangerous to the careless is the same property that makes it powerful in the hands of someone who has spent decades learning to direct it. Withdraw that precision, and arcane instability does not simply diminish the practitioner's effectiveness. It adds a second hazard to the situation.</div>
+      <div class="overlay-text">Fel is volatile in a different register. Where arcane volatility responds to precision and can be directed by it, fel propagation is entropic: it spreads chaotically, consumes structure on contact, and resists the imposition of external order. Precision cannot stabilize it the way it stabilizes arcane. What precision can do is prepare the surrounding medium before the fel arrives, leaving it no path except the one already chosen.</div>
+
+      <div class="overlay-section">III. The Frequency Framework</div>
+      <div class="overlay-note">Multiphase arcane fields and spatial dominance.</div>
+      <div class="overlay-text">A single-phase arcane field, however carefully constructed, presents fel with a legible target. The practical response is to construct arcane fields that do not hold a fixed configuration: fields that fluctuate across multiple simultaneous phases, presenting a continuously shifting interference pattern that the surrounding medium cannot resolve into any single exploitable frequency.</div>
+      <div class="overlay-text">When such a field is sufficiently dense and coherent, it achieves something that static containment never managed: spatial dominance. The local magical substrate becomes so thoroughly occupied by ordered arcane fluctuation that the fel entering the space finds no path of least resistance except the ones the arcane structure has already defined. The fel is not being opposed. The available geometry has simply been arranged in advance.</div>
+      <div class="overlay-text" style="font-style:italic;color:var(--gold-pale);">The fel is not contained. The space around it is claimed. There is a difference, and it matters.</div>
+      <div class="overlay-text">At this level of execution the two energies do not meet directly. The spellform functions as chassis: a volatile payload traveling a road it did not build and cannot alter.</div>
+      <div class="overlay-section">On Failure Modes</div>
+      <div class="overlay-text">A multiphase field that is insufficiently dense or imprecisely phased achieves partial spatial dominance at best. Below a certain threshold of phase precision, the relationship between the two systems inverts: the fel's chaotic frequencies overwhelm the arcane structure, consuming it from the boundary inward. At that point the practitioner is no longer working within a chassis. They are managing an unmediated fel discharge with whatever time and resources remain. Prior documented instances of this failure mode have not been encouraging.</div>
+
+      <div class="overlay-section">IV. Bound Entities as Environmental Factors</div>
+      <div class="overlay-note">The Infernal as medium, not source.</div>
+      <div class="overlay-text">The demonological tradition treats bound entities as reservoirs from which power is extracted and directed. For the present work, it obscures something more useful. A bound entity of sufficient magnitude alters the local magical substrate as a consequence of its manifestation, specifically by elevating the ambient fel saturation of the surrounding medium. This is not a directed output. It is an environmental condition, as consistent and as impersonal as heat from combustion.</div>
+      <div class="overlay-text">The practitioner who understands this summons an Infernal not to draw on its power but to alter the conditions under which their own field geometry operates. A dependency on an entity's continued cooperation introduces a variable the practitioner cannot fully control. A dependency on the physical consequences of that entity's presence requires only that the timing be correct, which is entirely within the practitioner's control.</div>
+
+      <div class="overlay-section">V. Prerequisites for Practice</div>
+      <div class="overlay-note">What the practitioner must already be.</div>
+      <div class="overlay-text">The frequency framework cannot be learned in isolation from the arcane tradition that underlies it. Practitioners who attempt it without that foundation will encounter the field's failure modes before they encounter its capabilities.</div>
+      <div class="overlay-section">Command of Arcane Volatility</div>
+      <div class="overlay-text">Because arcane is itself volatile, a practitioner who cannot hold complex field configurations without active strain has nothing to build on here. The phase structures required are not simple, and they must be maintained while a second entropic system operates in proximity.</div>
+      <div class="overlay-section">Geometric Precision at the Field Boundary</div>
+      <div class="overlay-text">The boundary between the arcane phase field and the fel propagation space is where failures originate. Imprecision there creates regions where the arcane presents a simplified or static frequency, which is exactly the condition that allows fel to find purchase. The boundary requires attention as a distinct problem.</div>
+      <div class="overlay-section">Sequencing Discipline</div>
+      <div class="overlay-text">Each discharge must be complete before the next is introduced. Under field conditions with ambient fel saturation elevated, this discipline is harder to maintain than it appears in theory. The standard required is not exceptional. It is consistent, and consistency under pressure is developed through practice rather than through understanding the reasons for the requirement.</div>
+
+      <div class="overlay-section">VI. On the Question of Safety</div>
+      <div class="overlay-note">Between two errors.</div>
+      <div class="overlay-text">Two positions on fel practice dominate current discourse. The first holds that fel is a tool to be bound, commanded, spent. Beyond a certain point, the assumption becomes the weakness: binding a demon is not the same as understanding the energy it produces. The second holds that fel is simply unworkable. This view is understandable. It is also a refusal to examine the outcomes carefully enough. The corruption follows from contact without geometry. The energy is not the variable that matters. The structure around it is.</div>
+      <div class="overlay-text">The sin'dorei did not survive by refusing difficult knowledge. They survived by learning to hold it correctly.</div>
+
+      <div class="overlay-colophon">Magister Vael'tharyn Wrathsworn &nbsp;·&nbsp; Restricted circulation &nbsp;·&nbsp; Reproduction without attribution is theft; attribution without comprehension is flattery.</div>
+    `
+  };
+
+  function openPaper(id) {
+    const content = papers[id];
+    if (!content) return;
+    document.getElementById('paperContent').innerHTML =
+      `<button id="paperClose" style="position:fixed;top:2rem;right:2.5rem;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-dim);background:none;border:none;cursor:pointer;font-family:'Raleway',sans-serif;transition:color 0.2s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--text-dim)'" onclick="closePaper()">Close ✕</button>` + content;
+    const overlay = document.getElementById('paperOverlay');
+    overlay.style.opacity = '1';
+    overlay.style.pointerEvents = 'all';
+    overlay.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
   }
+
+  function closePaper() {
+    const overlay = document.getElementById('paperOverlay');
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('paperOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('paperOverlay')) closePaper();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePaper();
+  });
 </script>
 </body>
 </html>
